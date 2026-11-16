@@ -7,7 +7,7 @@
 
 ## 구조
 
-- `index.html` 첫 화면, `about.html` 교회소개, `worship.html` 예배안내, `sermon.html` 말씀과 설교, `news.html` 소식과 나눔(주보·후기)
+- `index.html` 첫 화면, `about.html` 교회소개, `worship.html` 예배안내·오시는 길, `newcomer.html` 새가족 안내(자주 묻는 질문), `sermon.html` 말씀과 설교, `news.html` 소식과 나눔(주보·후기)
 - 스타일은 각 페이지 `<style>`과 인라인 `style`에 있다. 게시판 공통 모양만 `assets/css/board.css`.
 - `assets/js/site.js`: 복사·펼치기 버튼, 유튜브 목록, 청소년 설교문(`data/youth.json`)
 - `assets/js/board.js`: Firebase(Firestore) 게시판. 후기는 누구나, 주보·설교 안내·청소년 설교문은 관리자만 쓴다.
@@ -24,7 +24,7 @@
    ```json
    { "date": "2026-11-22", "title": "주일 예배 주보", "pages": ["bulletins/2026-11-22-1.png", "bulletins/2026-11-22-2.png"] }
    ```
-4. 커밋해서 `main`에 올린다. `news.html`의 주보 칸에 날짜순으로 나타나고, 가장 최근 주보가 펼쳐져 보인다.
+4. 커밋해서 `main`에 올린다. `news.html`의 주보 칸에 날짜순으로 나타나고, 한 쪽에 4개씩, 모두 접힌 채로 보인다.
 
 주보에 교우의 전화번호·주소 같은 개인 정보가 있으면 올리기 전에 사용자에게 확인한다. 저장소와 사이트는 누구나 볼 수 있다.
 
