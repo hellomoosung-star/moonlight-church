@@ -35,6 +35,8 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
 .idle2{animation-delay:-1.4s}
 @keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){.idle{animation:none}.lift,.btn{transition:none}.lift:hover,.btn:hover{transform:none}}
+.nav-x{display:inline}
+@media (max-width:640px){.nav{flex-wrap:nowrap!important;gap:0!important;justify-content:space-between;width:calc(100% + 32px);margin:0 -16px;font-size:3.25vw!important}.nav a{padding:10px 1.2vw!important;white-space:nowrap}.nav-x{display:none}}
 </style>
 </head>
 <body>
@@ -52,7 +54,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
         <a href="worship.html">예배안내</a>
         <a href="sermon.html">말씀과 설교</a>
         <a href="news.html">소식과 나눔</a>
-        <a href="worship.html#first">새가족안내</a>
+        <a href="newcomer.html">새가족<span class="nav-x">안내</span></a>
       </nav>
     </div>
     <div style="position:relative;max-width:1240px;margin:0 auto;padding:34px 32px 74px;box-sizing:border-box;text-align:center;color:#FFFFFF">
