@@ -35,9 +35,20 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
 .idle2{animation-delay:-1.4s}
 .ways{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media (max-width:860px){.ways{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.faq{display:grid;gap:12px}
+.faq-item{background:#FFFFFF;border:2px solid #F1E4C8;border-radius:22px;overflow:hidden}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:flex-start;padding:16px 18px;font-weight:700;font-size:17px;line-height:1.5;color:#3B2A1A}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";margin-left:auto;flex:none;font-size:22px;line-height:1.1;color:#1F5FA8}
+.faq-item[open] summary::after{content:"−"}
+.faq-item summary:focus-visible{outline:3px solid #1F5FA8;outline-offset:-3px;border-radius:20px}
+.faq-q{flex:none;width:28px;height:28px;border-radius:50%;background:#FFE27A;color:#7A5A12;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center}
+.faq-a{padding:0 18px 18px 58px;font-size:16px;line-height:1.75;color:#4A3828}
+@media (max-width:560px){.faq-a{padding-left:18px}}
 @keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){.idle{animation:none}.lift,.btn{transition:none}.lift:hover,.btn:hover{transform:none}}
 </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "처음 가는데 미리 연락해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "아니요. 연락 없이 주일 오전 11시 30분에 맞춰 오시면 됩니다. 미리 물어보고 싶은 것이 있으면 인스타그램 @moonlight.church 로 편하게 메시지를 보내 주세요."}}, {"@type": "Question", "name": "예배는 언제, 어디에서 드리나요?", "acceptedAnswer": {"@type": "Answer", "text": "매주 주일 오전 11시 30분에 클라운지 서울 관악1호점(서울특별시 관악구 은천로 28 가동 2층 156호)에서 예배합니다. 지하철 2호선 봉천역 4번 출구에서 걸어서 8분쯤 걸립니다."}}, {"@type": "Question", "name": "건물에 교회 간판이 안 보여요. 맞게 온 건가요?", "acceptedAnswer": {"@type": "Answer", "text": "맞습니다. 달빛교회는 따로 예배당 건물이 없고, 주일마다 봉일프라자 2층의 모임 공간 ‘클라운지’를 빌려 예배합니다. 그래서 건물 밖에는 교회 간판이 없습니다. 위의 ‘사진으로 보는 길’을 따라 CLOUNGE 2F 표지판을 찾아 올라오세요."}}, {"@type": "Question", "name": "달빛교회는 어떤 교단인가요?", "acceptedAnswer": {"@type": "Answer", "text": "대한예수교장로회에 속한 장로교회입니다. 전 세계 장로교회가 380여 년 동안 기준으로 삼아 온 ‘웨스트민스터 표준문서’를 따라 믿고 가르칩니다."}}, {"@type": "Question", "name": "왜 이름이 달빛교회인가요?", "acceptedAnswer": {"@type": "Answer", "text": "달은 스스로 빛을 내지 못하고 햇빛을 받아 비춥니다. 교회도 하나님이 성경으로 알려 주신 빛을 받아 세상을 비춘다는 뜻을 담았습니다."}}, {"@type": "Question", "name": "예배는 어떤 순서로 드리나요?", "acceptedAnswer": {"@type": "Answer", "text": "성경이 보여 주는 대로 예배하려고 ‘예배모범’을 따릅니다. 그 주의 예배 순서는 주보에 그대로 실려 있어서, 오시기 전에 미리 보실 수 있습니다."}}, {"@type": "Question", "name": "사순절이나 대강절 같은 절기는 왜 지키지 않나요?", "acceptedAnswer": {"@type": "Answer", "text": "성경이 명하지 않은 것은 예배에 더하지 않는다는 종교개혁의 전통을 따르기 때문입니다. 그래서 성경에 없는 절기는 따로 지키지 않고, 매 주일을 같은 마음으로 예배합니다."}}, {"@type": "Question", "name": "가기 전에 설교를 먼저 들어 볼 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네. 최근 주일 설교와 짧은 영상을 홈페이지에서 바로 보실 수 있습니다."}}, {"@type": "Question", "name": "‘요리문답’이 무엇인가요? 처음 들어 봐요.", "acceptedAnswer": {"@type": "Answer", "text": "“사람의 가장 큰 목적은 무엇입니까?” 같은 물음과 답으로 신앙을 차근차근 배우는 책입니다. 달빛교회는 이 문답을 가르치고 설교합니다. 혼자 공부할 수 있는 앱도 있습니다."}}, {"@type": "Question", "name": "다녀온 사람들의 이야기를 볼 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네. 교우들이 설교와 공부를 듣고 남긴 후기가 ‘소식과 나눔’에 모여 있습니다."}}]}</script>
 </head>
 <body>
 <div id="top" style="background:#FEF7E8">
@@ -90,6 +101,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
           <div style="margin-top:8px;font-family:'Gaegu',sans-serif;font-weight:700;font-size:30px;line-height:1.2">처음이어도 괜찮아요</div>
           <p style="margin:8px 0 0;font-size:15px;line-height:1.7;color:#5A4532">편한 마음으로 오세요. 궁금한 점은 인스타그램으로 물어보셔도 좋습니다.</p>
           <a href="https://www.instagram.com/moonlight.church/" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;padding:10px 0;font-weight:700;font-size:15px;color:#1F5FA8">@moonlight.church →</a>
+          <a href="#faq" style="display:block;margin:0;padding:6px 0;font-weight:700;font-size:15px;color:#1F5FA8">자주 묻는 질문 ↓</a>
         </div>
         <img class="idle" src="assets/img/dali-hello.jpg" alt="손을 흔들며 인사하는 고양이 달이" style="flex:none;width:112px;aspect-ratio:392/560;object-fit:cover;mix-blend-mode:multiply;display:block">
       </div>
@@ -150,6 +162,55 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
           <figcaption style="margin-top:10px;display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.6;color:#4A3828"><span aria-hidden="true" style="flex:none;width:28px;height:28px;border-radius:50%;background:#1F5FA8;color:#FFFFFF;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:14px">4</span><span>이 계단으로 2층에 올라오면 됩니다</span></figcaption>
         </figure>
       </div>
+    </div>
+
+    <div id="faq" style="margin-top:72px">
+      <div style="font-family:'Gaegu',sans-serif;font-weight:700;font-size:22px;color:#2F8A4B">☾ 자주 묻는 질문</div>
+      <h2 style="margin:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(34px,4vw,46px);line-height:1.2">처음 오시는 분들이 궁금해하는 것</h2>
+      <p style="margin:10px 0 0;font-size:16px;line-height:1.7;color:#5A4532">질문을 누르면 답이 펼쳐집니다.</p>
+      <div class="faq" style="margin-top:22px">
+        <details class="faq-item">
+          <summary><span class="faq-q" aria-hidden="true">Q</span><span>처음 가는데 미리 연락해야 하나요?</span></summary>
+          <div class="faq-a">아니요. 연락 없이 주일 오전 11시 30분에 맞춰 오시면 됩니다. 미리 물어보고 싶은 것이 있으면 인스타그램 @moonlight.church 로 편하게 메시지를 보내 주세요.</div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="faq-q" aria-hidden="true">Q</span><span>예배는 언제, 어디에서 드리나요?</span></summary>
+          <div class="faq-a">매주 주일 오전 11시 30분에 클라운지 서울 관악1호점(서울특별시 관악구 은천로 28 가동 2층 156호)에서 예배합니다. 지하철 2호선 봉천역 4번 출구에서 걸어서 8분쯤 걸립니다.</div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="faq-q" aria-hidden="true">Q</span><span>건물에 교회 간판이 안 보여요. 맞게 온 건가요?</span></summary>
+          <div class="faq-a">맞습니다. 달빛교회는 따로 예배당 건물이 없고, 주일마다 봉일프라자 2층의 모임 공간 ‘클라운지’를 빌려 예배합니다. 그래서 건물 밖에는 교회 간판이 없습니다. 위의 ‘사진으로 보는 길’을 따라 CLOUNGE 2F 표지판을 찾아 올라오세요.</div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="faq-q" aria-hidden="true">Q</span><span>달빛교회는 어떤 교단인가요?</span></summary>
+          <div class="faq-a">대한예수교장로회에 속한 장로교회입니다. 전 세계 장로교회가 380여 년 동안 기준으로 삼아 온 ‘웨스트민스터 표준문서’를 따라 믿고 가르칩니다.<div style="margin-top:8px"><a href="about.html" style="color:#1F5FA8;font-weight:700">교회소개 자세히 보기 →</a></div></div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="faq-q" aria-hidden="true">Q</span><span>왜 이름이 달빛교회인가요?</span></summary>
+          <div class="faq-a">달은 스스로 빛을 내지 못하고 햇빛을 받아 비춥니다. 교회도 하나님이 성경으로 알려 주신 빛을 받아 세상을 비춘다는 뜻을 담았습니다.</div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="faq-q" aria-hidden="true">Q</span><span>예배는 어떤 순서로 드리나요?</span></summary>
+          <div class="faq-a">성경이 보여 주는 대로 예배하려고 ‘예배모범’을 따릅니다. 그 주의 예배 순서는 주보에 그대로 실려 있어서, 오시기 전에 미리 보실 수 있습니다.<div style="margin-top:8px"><a href="news.html#bulletin" style="color:#1F5FA8;font-weight:700">주보 보기 →</a></div></div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="faq-q" aria-hidden="true">Q</span><span>사순절이나 대강절 같은 절기는 왜 지키지 않나요?</span></summary>
+          <div class="faq-a">성경이 명하지 않은 것은 예배에 더하지 않는다는 종교개혁의 전통을 따르기 때문입니다. 그래서 성경에 없는 절기는 따로 지키지 않고, 매 주일을 같은 마음으로 예배합니다.</div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="faq-q" aria-hidden="true">Q</span><span>가기 전에 설교를 먼저 들어 볼 수 있나요?</span></summary>
+          <div class="faq-a">네. 최근 주일 설교와 짧은 영상을 홈페이지에서 바로 보실 수 있습니다.<div style="margin-top:8px"><a href="sermon.html" style="color:#1F5FA8;font-weight:700">말씀과 설교 보기 →</a></div></div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="faq-q" aria-hidden="true">Q</span><span>‘요리문답’이 무엇인가요? 처음 들어 봐요.</span></summary>
+          <div class="faq-a">“사람의 가장 큰 목적은 무엇입니까?” 같은 물음과 답으로 신앙을 차근차근 배우는 책입니다. 달빛교회는 이 문답을 가르치고 설교합니다. 혼자 공부할 수 있는 앱도 있습니다.<div style="margin-top:8px"><a href="https://wlcmoonlight.vercel.app/" style="color:#1F5FA8;font-weight:700">대요리문답 공부 앱 열기 →</a></div></div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="faq-q" aria-hidden="true">Q</span><span>다녀온 사람들의 이야기를 볼 수 있나요?</span></summary>
+          <div class="faq-a">네. 교우들이 설교와 공부를 듣고 남긴 후기가 ‘소식과 나눔’에 모여 있습니다.<div style="margin-top:8px"><a href="news.html#board" style="color:#1F5FA8;font-weight:700">후기 읽기 →</a></div></div>
+        </details>
+      </div>
+      <p style="margin:18px 0 0;font-size:15px;line-height:1.7;color:#5A4532">여기에 없는 질문은 인스타그램 <a href="https://www.instagram.com/moonlight.church/" target="_blank" rel="noopener noreferrer" style="color:#1F5FA8;font-weight:700">@moonlight.church</a> 로 물어봐 주세요.</p>
     </div>
 
     <div style="margin:72px 0 64px;background:#F4EBD6;border-radius:30px;padding:26px 30px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px">
