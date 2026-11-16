@@ -49,6 +49,9 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
 .card:hover img{transform:scale(1.08) rotate(-3deg)}
 .friend img{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
 .friend:hover img{transform:translateY(-10px)}
+.friend{transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
+.friend:hover{transform:translateY(-6px)}
+.friend:focus-visible{outline:3px solid #1F5FA8;outline-offset:3px;border-radius:32px}
 .pose-box{position:relative;width:100%;max-width:230px;margin:0 auto;aspect-ratio:392/560}
 .pose{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:pose 12s ease-in-out infinite}
 @keyframes pose{0%{opacity:0;transform:translateY(10px) scale(.96)}3%{opacity:1;transform:translateY(-8px) scale(1.02)}6%{transform:none}31%{opacity:1;transform:none}35%,100%{opacity:0;transform:none}}
@@ -58,7 +61,7 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
 .idle2{animation-delay:-.9s}.idle3{animation-delay:-1.8s}.idle4{animation-delay:-2.6s}
 @keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 @keyframes posefade{0%{opacity:0}5%,30%{opacity:1}36%,100%{opacity:0}}
-@media (prefers-reduced-motion:reduce){.pose{animation-name:posefade}.scene,.twinkle,.petal,.float,.idle{animation:none}.hi{animation:none;opacity:1}.hi2{display:none}.card,.card img,.friend img{transition:none}.card:hover,.card:hover img,.friend:hover img{transform:none}}
+@media (prefers-reduced-motion:reduce){.pose{animation-name:posefade}.friend{transition:none}.friend:hover{transform:none}.scene,.twinkle,.petal,.float,.idle{animation:none}.hi{animation:none;opacity:1}.hi2{display:none}.card,.card img,.friend img{transition:none}.card:hover,.card:hover img,.friend:hover img{transform:none}}
 @media (max-width:760px){.float{display:none}}
 </style>
 </head>
@@ -164,7 +167,7 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
       <p style="margin:10px 0 0;font-size:17px;line-height:1.7;color:#6B5340">함께 인사하고, 기도하고, 찬양해요</p>
     </div>
     <div style="margin-top:36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px">
-      <div class="friend" style="background:#FFFDF6;border-radius:32px;padding:18px 18px 26px;text-align:center;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
+      <a class="friend" href="worship.html#first" style="display:block;text-decoration:none;color:inherit;background:#FFFDF6;border-radius:32px;padding:18px 18px 26px;text-align:center;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
         <div style="position:relative;background:#FCF2E5;border-radius:24px;overflow:hidden">
           <div class="pose-box"><img class="pose" src="assets/img/dali-hello.jpg" alt="손을 흔들며 인사하는 고양이 달이" style="animation-delay:0.00s"><img class="pose" src="assets/img/dali-pray.jpg" alt="두 손을 모으고 기도하는 고양이 달이" style="animation-delay:-8.00s"><img class="pose" src="assets/img/dali-praise.jpg" alt="두 팔을 들고 찬양하는 고양이 달이" style="animation-delay:-4.00s"></div>
           <div aria-hidden="true" style="position:absolute;left:12px;top:12px;height:30px;min-width:84px;background:#FFFFFF;border-radius:999px;box-shadow:0 3px 0 rgba(90,60,30,.1);font-weight:900;font-size:14px;color:#7A5A12"><span class="pose-lab" style="animation-delay:0.00s">인사해요</span><span class="pose-lab" style="animation-delay:-8.00s">기도해요</span><span class="pose-lab" style="animation-delay:-4.00s">찬양해요</span></div>
@@ -172,8 +175,8 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
         <div style="margin-top:16px;display:inline-block;background:#FFE7A3;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#7A5A12">새가족 안내</div>
         <div style="margin-top:8px;font-family:'Gaegu',sans-serif;font-weight:700;font-size:32px;line-height:1.1">달이</div>
         <div style="margin-top:6px;font-size:15px;line-height:1.6;color:#6B5340">처음 오신 분을<br>제일 먼저 반겨요</div>
-      </div>
-      <div class="friend" style="background:#FFFDF6;border-radius:32px;padding:18px 18px 26px;text-align:center;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
+      </a>
+      <a class="friend" href="sermon.html" style="display:block;text-decoration:none;color:inherit;background:#FFFDF6;border-radius:32px;padding:18px 18px 26px;text-align:center;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
         <div style="position:relative;background:#FCF1E2;border-radius:24px;overflow:hidden">
           <div class="pose-box"><img class="pose" src="assets/img/mongi-hello.jpg" alt="손을 흔들며 인사하는 곰 몽이" style="animation-delay:-0.35s"><img class="pose" src="assets/img/mongi-pray.jpg" alt="두 손을 모으고 기도하는 곰 몽이" style="animation-delay:-8.35s"><img class="pose" src="assets/img/mongi-praise.jpg" alt="두 팔을 들고 찬양하는 곰 몽이" style="animation-delay:-4.35s"></div>
           <div aria-hidden="true" style="position:absolute;left:12px;top:12px;height:30px;min-width:84px;background:#FFFFFF;border-radius:999px;box-shadow:0 3px 0 rgba(90,60,30,.1);font-weight:900;font-size:14px;color:#2C6E3A"><span class="pose-lab" style="animation-delay:-0.35s">인사해요</span><span class="pose-lab" style="animation-delay:-8.35s">기도해요</span><span class="pose-lab" style="animation-delay:-4.35s">찬양해요</span></div>
@@ -181,8 +184,8 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
         <div style="margin-top:16px;display:inline-block;background:#D5EFC9;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#2C6E3A">말씀과 설교</div>
         <div style="margin-top:8px;font-family:'Gaegu',sans-serif;font-weight:700;font-size:32px;line-height:1.1">몽이</div>
         <div style="margin-top:6px;font-size:15px;line-height:1.6;color:#6B5340">매주 말씀을<br>함께 읽고 나눠요</div>
-      </div>
-      <div class="friend" style="background:#FFFDF6;border-radius:32px;padding:18px 18px 26px;text-align:center;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
+      </a>
+      <a class="friend" href="worship.html" style="display:block;text-decoration:none;color:inherit;background:#FFFDF6;border-radius:32px;padding:18px 18px 26px;text-align:center;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
         <div style="position:relative;background:#FDF5E5;border-radius:24px;overflow:hidden">
           <div class="pose-box"><img class="pose" src="assets/img/byeoli-hello.jpg" alt="손을 흔들며 인사하는 부엉이 별이" style="animation-delay:-0.70s"><img class="pose" src="assets/img/byeoli-pray.jpg" alt="두 손을 모으고 기도하는 부엉이 별이" style="animation-delay:-8.70s"><img class="pose" src="assets/img/byeoli-praise.jpg" alt="두 팔을 들고 찬양하는 부엉이 별이" style="animation-delay:-4.70s"></div>
           <div aria-hidden="true" style="position:absolute;left:12px;top:12px;height:30px;min-width:84px;background:#FFFFFF;border-radius:999px;box-shadow:0 3px 0 rgba(90,60,30,.1);font-weight:900;font-size:14px;color:#1F4F86"><span class="pose-lab" style="animation-delay:-0.70s">인사해요</span><span class="pose-lab" style="animation-delay:-8.70s">기도해요</span><span class="pose-lab" style="animation-delay:-4.70s">찬양해요</span></div>
@@ -190,8 +193,8 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
         <div style="margin-top:16px;display:inline-block;background:#D3E6FA;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#1F4F86">기도와 예배</div>
         <div style="margin-top:8px;font-family:'Gaegu',sans-serif;font-weight:700;font-size:32px;line-height:1.1">별이</div>
         <div style="margin-top:6px;font-size:15px;line-height:1.6;color:#6B5340">어두운 밤에도<br>등불을 들고 기다려요</div>
-      </div>
-      <div class="friend" style="background:#FFFDF6;border-radius:32px;padding:18px 18px 26px;text-align:center;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
+      </a>
+      <a class="friend" href="news.html" style="display:block;text-decoration:none;color:inherit;background:#FFFDF6;border-radius:32px;padding:18px 18px 26px;text-align:center;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
         <div style="position:relative;background:#FDF4E3;border-radius:24px;overflow:hidden">
           <div class="pose-box"><img class="pose" src="assets/img/toto-hello.jpg" alt="손을 흔들며 인사하는 토끼 토토" style="animation-delay:-1.05s"><img class="pose" src="assets/img/toto-pray.jpg" alt="두 손을 모으고 기도하는 토끼 토토" style="animation-delay:-9.05s"><img class="pose" src="assets/img/toto-praise.jpg" alt="두 팔을 들고 찬양하는 토끼 토토" style="animation-delay:-5.05s"></div>
           <div aria-hidden="true" style="position:absolute;left:12px;top:12px;height:30px;min-width:84px;background:#FFFFFF;border-radius:999px;box-shadow:0 3px 0 rgba(90,60,30,.1);font-weight:900;font-size:14px;color:#8A2F4A"><span class="pose-lab" style="animation-delay:-1.05s">인사해요</span><span class="pose-lab" style="animation-delay:-9.05s">기도해요</span><span class="pose-lab" style="animation-delay:-5.05s">찬양해요</span></div>
@@ -199,7 +202,7 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
         <div style="margin-top:16px;display:inline-block;background:#FBD9E2;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#8A2F4A">소식과 나눔</div>
         <div style="margin-top:8px;font-family:'Gaegu',sans-serif;font-weight:700;font-size:32px;line-height:1.1">토토</div>
         <div style="margin-top:6px;font-size:15px;line-height:1.6;color:#6B5340">교회 소식과<br>따뜻한 나눔을 전해요</div>
-      </div>
+      </a>
     </div>
   </div>
 
