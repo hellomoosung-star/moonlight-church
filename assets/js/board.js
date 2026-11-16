@@ -200,8 +200,10 @@ function setupBulletins() {
   if (!box) return;
   const form = document.getElementById('bulletin-form');
   const status = document.getElementById('bulletin-status');
+  const PER_PAGE = 4; // 한 번에 보이는 주보 수. 지난 주보는 쪽 번호로 넘긴다
   let items = [];
   let openId = null;
+  let pageNo = 0;
 
   async function showPages(b, holder) {
     holder.textContent = '';
@@ -228,7 +230,9 @@ function setupBulletins() {
       box.appendChild(el('p', { class: 'b-empty', text: '아직 올라온 주보가 없습니다.' }));
       return;
     }
-    items.forEach((b) => {
+    const pages = Math.ceil(items.length / PER_PAGE);
+    pageNo = Math.min(pageNo, pages - 1);
+    items.slice(pageNo * PER_PAGE, (pageNo + 1) * PER_PAGE).forEach((b) => {
       const open = openId === b.id;
       const more = el('span', { class: 'ymore', text: open ? '접기 ↑' : '보기 →' });
       const head = el('button', { class: 'yhead', type: 'button', 'aria-expanded': open ? 'true' : 'false' }, [
@@ -256,12 +260,30 @@ function setupBulletins() {
       box.appendChild(row);
     });
     box.appendChild(el('div', { class: 'yend' }));
+    if (pages > 1) {
+      const go = (n) => () => { pageNo = n; openId = null; draw(); box.scrollIntoView({ block: 'nearest' }); };
+      const nav = el('nav', { class: 'pager', 'aria-label': '지난 주보 쪽 번호' });
+      const prev = el('button', { class: 'pg', type: 'button', text: '‹ 이전' });
+      prev.disabled = pageNo === 0;
+      prev.addEventListener('click', go(pageNo - 1));
+      nav.appendChild(prev);
+      for (let n = 0; n < pages; n++) {
+        const b = el('button', { class: 'pg num', type: 'button', text: String(n + 1), 'aria-current': n === pageNo ? 'page' : null, 'aria-label': (n + 1) + '쪽' });
+        b.addEventListener('click', go(n));
+        nav.appendChild(b);
+      }
+      const next = el('button', { class: 'pg', type: 'button', text: '다음 ›' });
+      next.disabled = pageNo === pages - 1;
+      next.addEventListener('click', go(pageNo + 1));
+      nav.appendChild(next);
+      box.appendChild(nav);
+    }
   }
   async function load() {
     // 주보는 두 곳에서 온다: 저장소 파일(data/bulletins.json)과 관리자가 화면에서 올린 것(Firestore)
     const [files, live] = await Promise.all([
       fetch('data/bulletins.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : [])).catch(() => []),
-      getDocs(query(collection(db, 'bulletins'), orderBy('date', 'desc'), limit(24)))
+      getDocs(query(collection(db, 'bulletins'), orderBy('date', 'desc'), limit(200)))
         .then((snap) => snap.docs.map((d) => ({ id: d.id, ...d.data() }))).catch(() => [])
     ]);
     items = files.map((b) => ({ ...b, id: 'file-' + b.date })).concat(live)
@@ -291,6 +313,7 @@ function setupBulletins() {
       form.elements.date.value = toDate();
       status.textContent = '주보를 올렸습니다.';
       openId = ref.id;
+      pageNo = 0;
       await load();
     } catch (e) {
       status.textContent = e.code === 'image-too-large' ? '그림이 너무 큽니다. 더 작은 파일로 올려 주세요.' : errText(e);

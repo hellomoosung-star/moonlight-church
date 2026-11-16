@@ -85,3 +85,8 @@ details.b-admin summary{cursor:pointer;font-weight:700;font-size:16px;color:#1F5
   .k-msg.right .k-line{align-items:flex-end}
   .k-side,.k-msg.right .k-side{display:flex;align-items:center;gap:8px;padding:0 4px}
 }
+/* 쪽 번호 */
+.pager{margin-top:18px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px}
+.pg{min-width:44px;min-height:44px;padding:0 14px;border-radius:999px;border:2px solid #E6D7B8;background:#FFFFFF;color:#3B2A1A;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+.pg[aria-current="page"]{background:#1F5FA8;border-color:#1F5FA8;color:#FFFFFF}
+.pg:disabled{opacity:.45;cursor:default}
