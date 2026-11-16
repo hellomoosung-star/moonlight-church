@@ -36,7 +36,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
 @keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){.idle{animation:none}.lift,.btn{transition:none}.lift:hover,.btn:hover{transform:none}}
 </style>
-<link rel="stylesheet" href="assets/css/board.css?v=20261116c">
+<link rel="stylesheet" href="assets/css/board.css?v=20261117a">
 </head>
 <body>
 <div id="top" style="background:#FEF7E8">
@@ -93,6 +93,10 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
           <label for="post-name">이름 또는 별명<input id="post-name" name="name" type="text" maxlength="20" autocomplete="nickname" required></label>
           <label for="post-title">제목<input id="post-title" name="title" type="text" maxlength="80" required></label>
         </div>
+        <fieldset class="k-pickset">
+          <legend>말머리 (어떤 모임이나 공부의 후기인가요?)</legend>
+          <div id="post-tag-pick" class="k-picks"></div>
+        </fieldset>
         <label for="post-body">내용<textarea id="post-body" name="body" maxlength="4000" required></textarea></label>
         <div class="b-trap" aria-hidden="true"><label>이 칸은 비워 두세요<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
         <p class="b-hint">전화번호나 주소 같은 개인 정보는 적지 말아 주세요. 글은 쓴 기기에서만 지울 수 있고, 다른 기기에서는 교회에 삭제를 부탁해 주세요.</p>
@@ -109,10 +113,22 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
         <button class="b-more" type="submit">찾기</button>
         <button id="post-search-clear" class="k-clear" type="button" hidden>전체 글 보기</button>
       </form>
+      <div id="post-tags" class="k-chips" role="group" aria-label="말머리로 걸러 보기"></div>
       <p id="post-search-note" class="b-status" role="status" hidden style="margin:10px 0 0"></p>
       <div id="post-list" class="k-room"><p class="b-empty">글을 불러오는 중입니다…</p></div>
       <div id="post-pager"></div>
       <details class="b-admin" data-admin hidden style="margin-top:28px">
+        <summary>말머리 관리 (관리자)</summary>
+        <p class="b-hint" style="margin-top:12px">새 강의를 시작하면 말머리를 더하세요. 끝난 강의는 지우지 말고 “글쓰기에서 숨기기”를 누르면, 지난 후기를 계속 모아 볼 수 있습니다. 말머리를 지우면 그 말머리의 글은 흰 말풍선으로 남습니다.</p>
+        <div id="tag-admin-list" style="margin-top:12px"></div>
+        <form id="tag-add" class="k-search" style="margin-top:12px">
+          <label for="tag-name" class="k-search-label">새 말머리 이름</label>
+          <input id="tag-name" name="name" type="text" maxlength="20" placeholder="새 말머리 이름 (예: 요리문답 공부)">
+          <button class="b-more" type="submit">말머리 더하기</button>
+        </form>
+        <p id="tag-status" class="b-status" role="status" style="margin:10px 0 0"></p>
+      </details>
+      <details class="b-admin" data-admin hidden style="margin-top:14px">
         <summary>게시판 백업 (관리자)</summary>
         <p class="b-hint" style="margin-top:12px">후기, 설교 안내, 청소년 설교문 글을 파일 하나로 내려받습니다. 한 달에 한 번쯤 내려받아 구글 드라이브에 넣어 두세요. 주보 그림은 용량이 커서 목록만 담깁니다.</p>
         <div class="b-actions" style="margin-top:12px"><button id="backup-button" class="b-submit" type="button">백업 파일 내려받기</button><span id="backup-status" class="b-status" role="status"></span></div>
@@ -148,7 +164,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
   </div>
 </div>
 
-<script src="assets/js/site.js?v=20261116c" defer></script>
-<script type="module" src="assets/js/board.js?v=20261116c"></script>
+<script src="assets/js/site.js?v=20261117a" defer></script>
+<script type="module" src="assets/js/board.js?v=20261117a"></script>
 </body>
 </html>

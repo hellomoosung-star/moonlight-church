@@ -5,7 +5,7 @@ import {
   getAuth, onAuthStateChanged, signInAnonymously, signInWithPopup, GoogleAuthProvider, signOut
 } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 import {
-  getFirestore, collection, query, orderBy, limit, getDocs, getDoc, setDoc, addDoc, deleteDoc, doc, serverTimestamp, getCountFromServer
+  getFirestore, collection, query, orderBy, limit, getDocs, getDoc, setDoc, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, getCountFromServer
 } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
 // 브라우저에 공개되는 연결 정보다. 비밀 값이 아니다.
@@ -20,6 +20,15 @@ const firebaseConfig = {
 // 화면에 관리자 버튼을 보일지 정할 때만 쓴다. 실제 권한은 firestore.rules 의 목록이 정한다.
 const ADMIN_EMAILS = ['hello.moosung@gmail.com', 'boxter011@gmail.com'];
 const FACES = ['dali', 'mongi', 'byeoli', 'toto'];
+// 후기 말머리. 관리자가 화면에서 고치면 Firestore 의 site/tags 문서에 저장되고, 그 뒤로는 그 목록을 쓴다.
+const TAG_COLORS = ['#FFE55C', '#CDEFC4', '#FFD3DF', '#E3D8FF', '#FFD9A8', '#BFEDE6', '#F6E0B8', '#FFC9B8'];
+const DEFAULT_TAGS = [
+  { id: 'sermon', name: '주일설교', color: TAG_COLORS[0] },
+  { id: 'ecclesiology', name: '교회론 강의', color: TAG_COLORS[1] },
+  { id: 'newcomer', name: '새가족 교육', color: TAG_COLORS[2] },
+  { id: 'study', name: '개인 공부·묵상', color: TAG_COLORS[3] },
+  { id: 'etc', name: '그 밖의 나눔', color: TAG_COLORS[4] }
+];
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -111,6 +120,69 @@ function setupPosts() {
   let total = 0;
   let pageNo = 0;
   let words = '';
+  let tags = DEFAULT_TAGS.slice();
+  let tagFilter = '';
+  const chipBox = document.getElementById('post-tags');
+  const pickBox = document.getElementById('post-tag-pick');
+  const tagAdminBox = document.getElementById('tag-admin-list');
+  const tagAddForm = document.getElementById('tag-add');
+  const tagStatus = document.getElementById('tag-status');
+  const tagOf = (id) => tags.find((t) => t.id === id);
+  // 말머리가 생기기 전에 올라온 새가족 교육 후기 다섯 편. 관리자가 말머리를 붙이면 그 값이 우선한다.
+  const EARLY_NEWCOMER = ['9qbPVDQ2MIhgH7qTy98w','GEuoxnF25O4OUFDQcDgO','b8aCLoRjqaoEjymfciFv','ektwOhRl45XaugrZZgus','zpWVRK9gHaaBW6J75MXx'];
+  const withTag = (d) => { const p = { id: d.id, ...d.data() }; if (p.tag === undefined && EARLY_NEWCOMER.includes(p.id)) p.tag = 'newcomer'; return p; };
+
+  // 말머리 단추(걸러 보기), 글쓰기 칸의 말머리 고르기, 관리자용 말머리 목록을 그린다
+  function drawTags() {
+    chipBox.textContent = '';
+    [{ id: '', name: '전체', color: '#FFFFFF' }].concat(tags).forEach((t) => {
+      const b = el('button', { class: 'k-chip', type: 'button', 'aria-pressed': tagFilter === t.id ? 'true' : 'false', style: 'background:' + t.color, text: t.name });
+      b.addEventListener('click', async () => {
+        if (t.id && !all) { try { await loadAll(); } catch (e) { return; } }
+        tagFilter = t.id;
+        pageNo = 0;
+        draw();
+      });
+      chipBox.appendChild(b);
+    });
+    const picked = (form.elements.tag && form.elements.tag.value) || '';
+    pickBox.textContent = '';
+    tags.filter((t) => !t.hidden).forEach((t) => {
+      const input = el('input', { type: 'radio', name: 'tag', value: t.id });
+      input.checked = picked === t.id;
+      pickBox.appendChild(el('label', { class: 'k-pick' }, [input, el('span', { style: '--tag:' + t.color, text: t.name })]));
+    });
+    tagAdminBox.textContent = '';
+    tags.forEach((t) => {
+      const hide = el('button', { class: 'b-more small', type: 'button', text: t.hidden ? '글쓰기에 다시 보이기' : '글쓰기에서 숨기기' });
+      hide.addEventListener('click', () => saveTags(tags.map((x) => (x.id === t.id ? Object.assign({}, x, { hidden: !x.hidden }) : x))));
+      tagAdminBox.appendChild(el('div', { class: 'k-tagrow' }, [
+        el('span', { class: 'k-swatch', style: 'background:' + t.color, 'aria-hidden': 'true' }),
+        el('span', { class: 'k-tagname', text: t.name + (t.hidden ? ' (숨김)' : '') }),
+        hide,
+        deleteButton(() => saveTags(tags.filter((x) => x.id !== t.id)))
+      ]));
+    });
+  }
+  async function saveTags(next) {
+    tagStatus.textContent = '저장하는 중입니다…';
+    try {
+      await setDoc(doc(db, 'site', 'tags'), { list: next });
+      tags = next;
+      if (tagFilter && !tagOf(tagFilter)) tagFilter = '';
+      tagStatus.textContent = '저장했습니다.';
+      draw();
+    } catch (e) { tagStatus.textContent = errText(e); throw e; }
+  }
+  tagAddForm.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const name = tagAddForm.elements.name.value.trim();
+    if (!name) return;
+    if (tags.some((t) => t.name === name)) { tagStatus.textContent = '이미 있는 말머리입니다.'; return; }
+    const used = tags.map((t) => t.color);
+    const color = TAG_COLORS.find((c) => !used.includes(c)) || TAG_COLORS[tags.length % TAG_COLORS.length];
+    saveTags(tags.concat([{ id: 't' + Date.now(), name, color }])).then(() => { tagAddForm.reset(); }, () => {});
+  });
 
   try { form.elements.name.value = localStorage.getItem('moon-name') || ''; } catch (e) { /* 저장소를 못 쓰는 브라우저 */ }
 
@@ -119,7 +191,13 @@ function setupPosts() {
     const right = p.order % 2 === 1;
     const name = p.name || '이름 없음';
     const body = el('p', { class: 'k-body', text: p.body });
-    const box = el('div', { class: 'k-bubble' }, [el('h3', { class: 'k-title', text: p.title }), body]);
+    const tag = tagOf(p.tag);
+    const box = el('div', { class: 'k-bubble' }, [
+      tag ? el('span', { class: 'k-tag', text: tag.name }) : null,
+      el('h3', { class: 'k-title', text: p.title }),
+      body
+    ]);
+    if (tag) box.style.background = tag.color; // 말머리마다 말풍선 색이 다르다
     const more = el('button', { class: 'k-more', type: 'button', 'aria-expanded': 'false', text: '더보기' });
     more.hidden = true;
     more.addEventListener('click', () => {
@@ -129,6 +207,16 @@ function setupPosts() {
     });
     box.appendChild(more);
     const side = el('div', { class: 'k-side' }, [el('span', { class: 'k-date', text: fmtDate(toDate(p.createdAt)) })]);
+    if (isAdmin()) {
+      // 관리자는 글마다 말머리를 바꿔 줄 수 있다
+      const pick = el('select', { class: 'k-retag', 'aria-label': '말머리 바꾸기' }, [el('option', { value: '', text: '말머리 없음' })]
+        .concat(tags.map((t) => el('option', { value: t.id, text: t.name }))));
+      pick.value = tag ? tag.id : '';
+      pick.addEventListener('change', () => {
+        updateDoc(doc(db, 'posts', p.id), { tag: pick.value }).then(() => { p.tag = pick.value; draw(); }, (e) => { alert(errText(e)); draw(); });
+      });
+      side.appendChild(pick);
+    }
     if (isAdmin() || (user && p.uid === user.uid)) {
       side.appendChild(deleteButton(() => deleteDoc(doc(db, 'posts', p.id)).then(() => {
         recent = recent.filter((x) => x.id !== p.id);
@@ -149,13 +237,15 @@ function setupPosts() {
   function draw() {
     const source = all || recent;
     const q = words.toLowerCase();
-    const shown = q
-      ? source.filter((p) => [p.name, p.title, p.body].some((t) => String(t || '').toLowerCase().includes(q)))
-      : source;
-    const count = q ? shown.length : total;
+    drawTags();
+    const narrowed = !!(q || tagFilter);
+    const shown = source
+      .filter((p) => !q || [p.name, p.title, p.body].some((t) => String(t || '').toLowerCase().includes(q)))
+      .filter((p) => !tagFilter || p.tag === tagFilter);
+    const count = narrowed ? shown.length : total;
     const pages = Math.max(1, Math.ceil(count / PER));
     pageNo = Math.min(pageNo, pages - 1);
-    const slice = q || all ? shown.slice(pageNo * PER, (pageNo + 1) * PER) : shown.slice(0, PER);
+    const slice = narrowed || all ? shown.slice(pageNo * PER, (pageNo + 1) * PER) : shown.slice(0, PER);
 
     searchNote.hidden = !q;
     searchClear.hidden = !q;
@@ -163,7 +253,7 @@ function setupPosts() {
 
     list.textContent = '';
     if (!slice.length) {
-      list.appendChild(el('p', { class: 'b-empty', text: q ? '찾는 글이 없습니다. 다른 낱말로 찾아보세요.' : '아직 올라온 글이 없습니다. 첫 글을 남겨 주세요.' }));
+      list.appendChild(el('p', { class: 'b-empty', text: q ? '찾는 글이 없습니다. 다른 낱말로 찾아보세요.' : tagFilter ? '이 말머리로 올라온 글이 아직 없습니다.' : '아직 올라온 글이 없습니다. 첫 글을 남겨 주세요.' }));
     }
     slice.forEach((p) => {
       const b = bubble(p);
@@ -184,6 +274,12 @@ function setupPosts() {
     items.forEach((p, i) => { p.order = count - 1 - i; });
     return items;
   }
+  async function loadTags() {
+    try {
+      const snap = await getDoc(doc(db, 'site', 'tags'));
+      if (snap.exists() && Array.isArray(snap.data().list)) tags = snap.data().list;
+    } catch (e) { /* 못 읽으면 기본 말머리를 쓴다 */ }
+  }
   async function loadFirst() {
     try {
       const [snap, counted] = await Promise.all([
@@ -191,7 +287,7 @@ function setupPosts() {
         getCountFromServer(collection(db, 'posts'))
       ]);
       total = counted.data().count;
-      recent = number(snap.docs.map((d) => ({ id: d.id, ...d.data() })), total);
+      recent = number(snap.docs.map(withTag), total);
       all = null;
       draw();
     } catch (e) {
@@ -202,7 +298,7 @@ function setupPosts() {
   async function loadAll() {
     const snap = await getDocs(query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(MAX)));
     total = Math.max(total, snap.size);
-    all = number(snap.docs.map((d) => ({ id: d.id, ...d.data() })), total);
+    all = number(snap.docs.map(withTag), total);
   }
   refreshers.push(draw);
 
@@ -233,12 +329,23 @@ function setupPosts() {
     const title = field(form, 'title');
     const body = field(form, 'body');
     if (!name || !title || !body) { status.textContent = '이름, 제목, 내용을 모두 적어 주세요.'; return; }
+    const tag = (form.elements.tag && form.elements.tag.value) || '';
+    if (!tag && tags.some((t) => !t.hidden)) { status.textContent = '말머리를 하나 골라 주세요.'; return; }
     const btn = form.querySelector('[type=submit]');
     btn.disabled = true;
     status.textContent = '올리는 중입니다…';
     try {
       if (!auth.currentUser) await signInAnonymously(auth);
-      await addDoc(collection(db, 'posts'), { name, title, body, uid: auth.currentUser.uid, createdAt: serverTimestamp() });
+      const post = { name, title, body, uid: auth.currentUser.uid, createdAt: serverTimestamp() };
+      try {
+        await addDoc(collection(db, 'posts'), tag ? Object.assign({ tag }, post) : post);
+      } catch (e) {
+        // 보안 규칙이 아직 말머리 칸을 모르면 말머리 없이 올린다
+        if (!tag || !String(e.code || '').includes('permission-denied')) throw e;
+        await addDoc(collection(db, 'posts'), post);
+      }
+      form.querySelectorAll('input[name=tag]').forEach((r) => { r.checked = false; });
+      tagFilter = '';
       try { localStorage.setItem('moon-name', name); } catch (e) { /* 무시 */ }
       form.elements.title.value = '';
       form.elements.body.value = '';
@@ -252,7 +359,7 @@ function setupPosts() {
     }
     btn.disabled = false;
   });
-  loadFirst();
+  loadTags().then(loadFirst);
 }
 
 /* ---------- 백업 ---------- */
@@ -267,7 +374,7 @@ function setupBackup() {
     status.textContent = '글을 모으는 중입니다…';
     try {
       const out = { savedAt: new Date().toISOString(), site: 'https://www.lightofmoon.org' };
-      for (const name of ['posts', 'notices', 'youth', 'bulletins']) {
+      for (const name of ['posts', 'notices', 'youth', 'bulletins', 'site']) {
         const snap = await getDocs(query(collection(db, name), limit(5000)));
         out[name] = snap.docs.map((d) => {
           const row = { id: d.id };
