@@ -1,0 +1,61 @@
+/* 게시판 공통 모양: 후기·나눔, 주보, 설교 안내, 관리자 글쓰기 */
+[hidden]{display:none!important}
+.b-card{background:#FFFDF6;border-radius:30px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8;padding:clamp(20px,4vw,36px);box-sizing:border-box}
+.b-form{display:grid;gap:16px;margin-top:18px}
+.b-row{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:640px){.b-row{grid-template-columns:1fr 2fr}.b-row.even{grid-template-columns:1fr 1fr}}
+.b-form label{display:grid;gap:6px;font-size:15px;font-weight:700;color:#5A4532}
+.b-form input,.b-form textarea{width:100%;box-sizing:border-box;padding:12px 14px;border:2px solid #E6D7B8;border-radius:14px;background:#FFFFFF;color:#3B2A1A;font:inherit;font-weight:400;font-size:16px}
+.b-form textarea{min-height:150px;resize:vertical;line-height:1.8}
+.b-form textarea.tall{min-height:320px}
+.b-form input:focus-visible,.b-form textarea:focus-visible{outline:3px solid #1F5FA8;outline-offset:2px}
+.b-hint{margin:0;font-size:14px;line-height:1.7;color:#6B5340;font-weight:400}
+.b-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.b-submit{display:inline-flex;align-items:center;min-height:48px;padding:0 28px;border-radius:999px;border:2px solid #1F5FA8;background:#1F5FA8;color:#FFFFFF;font:inherit;font-weight:700;font-size:16px;cursor:pointer}
+.b-submit:disabled{opacity:.6;cursor:default}
+.b-status{font-size:15px;color:#5A4532}
+.b-trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.b-list{margin-top:8px}
+.b-post{padding:26px 6px;border-top:2px solid #F1E4C8}
+.b-post:first-child{border-top:0}
+.b-title{margin:0;font-size:21px;font-weight:900;line-height:1.45}
+.b-body{margin:10px 0 0;max-width:40em;font-size:17px;line-height:1.9;color:#3B2A1A;white-space:pre-wrap;overflow-wrap:anywhere}
+.b-meta{margin-top:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:14px;color:#6B5340}
+.b-empty{margin:18px 0 0;font-size:16px;color:#6B5340}
+.b-del{min-height:36px;padding:0 14px;border-radius:999px;border:2px solid #B3263A;background:#FFFFFF;color:#B3263A;font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.b-del.armed{background:#B3263A;color:#FFFFFF}
+.b-more{display:inline-flex;align-items:center;min-height:46px;padding:0 24px;border-radius:999px;border:2px solid #1F5FA8;background:#FFFFFF;color:#1F5FA8;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+details.b-admin{margin-top:18px;border:2px dashed #C9B48A;border-radius:22px;padding:14px 20px;background:#FFFFFF}
+details.b-admin summary{cursor:pointer;font-weight:700;font-size:16px;color:#1F5FA8;min-height:32px;display:flex;align-items:center}
+/* 설교 안내 카드 (관리자가 올린 글) */
+.n-card{background:#FFF3B0;border-radius:30px;padding:24px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);margin-bottom:18px}
+.n-head{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px}
+.n-text{flex:999 1 320px;min-width:0}
+.n-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.n-pill{display:inline-block;background:#22428F;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#FFFFFF}
+.n-date{font-size:14px;color:#6B5340}
+.n-title{margin-top:8px;font-weight:900;font-size:clamp(20px,2.4vw,24px);line-height:1.4}
+.n-summary{margin:6px 0 0;font-size:16px;line-height:1.8;color:#4A3828}
+.n-tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.n-toggle{display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border-radius:999px;border:2px solid #22428F;background:#22428F;color:#FFFFFF;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+.n-body{margin-top:22px;background:#FFFDF6;border-radius:24px;padding:clamp(20px,4vw,40px)}
+.n-body-in{max-width:40em;margin:0 auto}
+.n-body h3{margin:34px 0 0;font-size:21px;font-weight:900;line-height:1.4}
+.n-body h3:first-child{margin-top:0}
+.n-body p{margin:12px 0 0;font-size:17px;line-height:1.9;color:#4A3828}
+.n-body p.q{background:#FEF7E8;border-radius:18px;padding:16px 20px;color:#22428F;font-weight:500}
+/* 맨 아래 관리자 로그인 */
+.admin-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 12px;padding:6px 16px 18px;background:#F4EBD6;font-size:13px;color:#6B5340}
+.admin-btn{min-height:44px;padding:0 14px;border:0;background:none;color:#6B5340;font:inherit;font-size:13px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+/* 주보 */
+.bl-pages{background:#FEF7E8;border-radius:24px;padding:clamp(12px,3vw,28px);margin:0 0 22px;display:grid;gap:16px;justify-items:center}
+.bl-page{display:block;width:100%;max-width:760px;height:auto;border-radius:12px;border:2px solid #F1E4C8;background:#FFFFFF}
+.b-form input[type=file]{padding:10px;font-size:15px}
+/* 줄 목록 (주보, 청소년 설교문 공통) */
+.yrow{border-top:2px solid #F1E4C8}
+.yhead{width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;padding:18px 6px;background:none;border:0;text-align:left;font-family:inherit;color:inherit;cursor:pointer}
+.ypass{flex:none;display:inline-block;background:#D5EFC9;border-radius:999px;padding:3px 12px;font-size:13px;font-weight:700;color:#2C6E3A}
+.ytitle{flex:999 1 260px;min-width:0;font-weight:900;font-size:18px;line-height:1.5}
+.ydate{flex:none;font-size:14px;color:#6B5340}
+.ymore{flex:none;font-weight:700;font-size:15px;color:#1F5FA8}
+.yend{border-top:2px solid #F1E4C8}

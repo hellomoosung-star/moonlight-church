@@ -138,45 +138,51 @@
   }
 
   /* ---------- 청소년 설교문 ---------- */
+  // tools: 관리자용 버튼처럼 제목 줄 옆에 붙일 요소들 (board.js 가 넘긴다)
+  function youthRow(y, tools) {
+    var more = el('span', { class: 'ymore', text: '읽기 →' });
+    var head = el('button', { class: 'yhead', type: 'button', 'aria-expanded': 'false' }, [
+      el('span', { class: 'ypass', text: y.passage }),
+      el('span', { class: 'ytitle', text: y.title }),
+      el('span', { class: 'ydate', text: fmtDate(y.date) }),
+      more
+    ]);
+    var inner = el('div', { class: 'ybody-in' }, [
+      el('div', { class: 'ymeta', text: ['청소년 설교문', y.series, y.author].filter(Boolean).join(' · ') }),
+      el('div', { class: 'ybig', text: y.title }),
+      el('div', { class: 'ysub', text: '본문: ' + y.passage + ' · ' + fmtDate(y.date) })
+    ]);
+    (y.blocks || []).forEach(function (b) {
+      inner.appendChild(b.k === 'h' ? el('h3', { text: b.x }) : el('p', { class: b.k === 'q' ? 'q' : null, text: b.x }));
+    });
+    var close = el('button', { class: 'yclose', type: 'button', text: '설교문 접기' });
+    inner.appendChild(el('div', { style: 'margin-top:28px;text-align:center' }, [close].concat(tools || [])));
+    var body = el('div', { class: 'ybody' }, [inner]);
+    body.hidden = true;
+    function toggle() {
+      var open = body.hidden;
+      body.hidden = !open;
+      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+      more.textContent = open ? '접기 ↑' : '읽기 →';
+      if (!open) head.scrollIntoView({ block: 'nearest' });
+    }
+    head.addEventListener('click', toggle);
+    close.addEventListener('click', toggle);
+    return el('div', { class: 'yrow' }, [head, body]);
+  }
+
   var youthBox = document.getElementById('youth-list');
   if (youthBox) {
     getJSON('data/youth.json').then(function (list) {
       youthBox.textContent = '';
-      list.forEach(function (y) {
-        var more = el('span', { class: 'ymore', text: '읽기 →' });
-        var head = el('button', { class: 'yhead', type: 'button', 'aria-expanded': 'false' }, [
-          el('span', { class: 'ypass', text: y.passage }),
-          el('span', { class: 'ytitle', text: y.title }),
-          el('span', { class: 'ydate', text: fmtDate(y.date) }),
-          more
-        ]);
-        var inner = el('div', { class: 'ybody-in' }, [
-          el('div', { class: 'ymeta', text: ['청소년 설교문', y.series, y.author].filter(Boolean).join(' · ') }),
-          el('div', { class: 'ybig', text: y.title }),
-          el('div', { class: 'ysub', text: '본문: ' + y.passage + ' · ' + fmtDate(y.date) })
-        ]);
-        (y.blocks || []).forEach(function (b) {
-          inner.appendChild(b.k === 'h' ? el('h3', { text: b.x }) : el('p', { class: b.k === 'q' ? 'q' : null, text: b.x }));
-        });
-        var close = el('button', { class: 'yclose', type: 'button', text: '설교문 접기' });
-        inner.appendChild(el('div', { style: 'margin-top:28px;text-align:center' }, [close]));
-        var body = el('div', { class: 'ybody' }, [inner]);
-        body.hidden = true;
-        function toggle() {
-          var open = body.hidden;
-          body.hidden = !open;
-          head.setAttribute('aria-expanded', open ? 'true' : 'false');
-          more.textContent = open ? '접기 ↑' : '읽기 →';
-          if (!open) head.scrollIntoView({ block: 'nearest' });
-        }
-        head.addEventListener('click', toggle);
-        close.addEventListener('click', toggle);
-        youthBox.appendChild(el('div', { class: 'yrow' }, [head, body]));
-      });
+      list.forEach(function (y) { youthBox.appendChild(youthRow(y)); });
       youthBox.appendChild(el('div', { class: 'yend' }));
     }).catch(function () {
       youthBox.textContent = '';
       youthBox.appendChild(el('p', { class: 'loading', text: '설교문을 불러오지 못했습니다. 잠시 뒤에 다시 열어 주세요.' }));
     });
   }
+
+  // 게시판 코드(board.js)가 같은 모양으로 그릴 수 있게 내어 준다
+  window.Moon = { el: el, fmtDate: fmtDate, youthRow: youthRow };
 })();

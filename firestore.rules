@@ -1,0 +1,53 @@
+rules_version = '2';
+
+// 달빛교회 홈페이지 게시판 보안 규칙.
+// Firebase 콘솔 → Firestore → 규칙 탭에 이 내용을 그대로 붙여 넣고 "게시"를 누른다.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 관리자: 아래 구글 계정으로 로그인한 사람
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in ['hello.moosung@gmail.com', 'boxter011@gmail.com'];
+    }
+
+    function text(value, min, max) {
+      return value is string && value.size() >= min && value.size() <= max;
+    }
+
+    // 후기·나눔: 누구나 읽고 쓴다. 지우기는 글쓴 기기와 관리자만.
+    match /posts/{id} {
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['name', 'title', 'body', 'uid', 'createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && text(request.resource.data.name, 1, 20)
+        && text(request.resource.data.title, 1, 80)
+        && text(request.resource.data.body, 1, 4000)
+        && request.resource.data.createdAt == request.time;
+      allow update: if false;
+      allow delete: if request.auth != null
+        && (resource.data.uid == request.auth.uid || isAdmin());
+    }
+
+    // 설교 안내, 청소년 설교문, 주보: 누구나 읽고, 관리자만 쓴다.
+    match /notices/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /youth/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    // 주보와 주보 그림(쪽마다 문서 하나)
+    match /bulletins/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /bulletinPages/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
