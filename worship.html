@@ -33,6 +33,8 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
 .btn:hover{transform:translateY(-3px)}
 .idle{animation:idle 3.4s ease-in-out infinite}
 .idle2{animation-delay:-1.4s}
+.ways{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:860px){.ways{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){.idle{animation:none}.lift,.btn{transition:none}.lift:hover,.btn:hover{transform:none}}
 </style>
@@ -123,6 +125,29 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
         <figure style="flex:1.2 1 360px;min-width:0;margin:0">
           <img src="assets/img/map.jpg" alt="봉천역 4번 출구에서 봉일프라자까지 걸어가는 길을 파란 선으로 표시한 약도" style="display:block;width:100%;border-radius:26px;border:2px solid #F1E4C8;box-shadow:0 8px 0 rgba(90,60,30,.08)">
           <figcaption style="margin-top:12px;font-size:14px;color:#6B5340;text-align:center">출발: 봉천역 · 도착: 봉일프라자 2층</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div style="margin-top:64px">
+      <div style="font-family:'Gaegu',sans-serif;font-weight:700;font-size:22px;color:#2F8A4B">☾ 사진으로 보는 길</div>
+      <h2 style="margin:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(34px,4vw,46px);line-height:1.2">건물에 도착하면 이렇게 들어오세요</h2>
+      <div class="ways" style="margin-top:24px;display:grid;gap:18px">
+        <figure style="margin:0">
+          <img src="assets/img/way-1-building.jpg" alt="붉은 벽돌 건물에 봉일온천 간판이 걸린 봉일프라자 바깥 모습" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;border:2px solid #F1E4C8;background:#F4EBD6">
+          <figcaption style="margin-top:10px;display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.6;color:#4A3828"><span aria-hidden="true" style="flex:none;width:28px;height:28px;border-radius:50%;background:#1F5FA8;color:#FFFFFF;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:14px">1</span><span>봉일온천 간판이 있는 붉은 건물이 봉일프라자입니다</span></figcaption>
+        </figure>
+        <figure style="margin:0">
+          <img src="assets/img/way-2-entrance.jpg" alt="초록색 지오식자재마트 간판 아래로 난 통로 입구" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;border:2px solid #F1E4C8;background:#F4EBD6">
+          <figcaption style="margin-top:10px;display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.6;color:#4A3828"><span aria-hidden="true" style="flex:none;width:28px;height:28px;border-radius:50%;background:#1F5FA8;color:#FFFFFF;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:14px">2</span><span>지오식자재마트 간판 아래 통로로 들어갑니다</span></figcaption>
+        </figure>
+        <figure style="margin:0">
+          <img src="assets/img/way-3-sign.jpg" alt="통로 천장에 걸린 CLOUNGE 클라운지 2F 표지판과 화살표. 지나가는 사람 얼굴은 흐리게 처리했다" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;border:2px solid #F1E4C8;background:#F4EBD6">
+          <figcaption style="margin-top:10px;display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.6;color:#4A3828"><span aria-hidden="true" style="flex:none;width:28px;height:28px;border-radius:50%;background:#1F5FA8;color:#FFFFFF;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:14px">3</span><span>통로 안쪽에서 CLOUNGE 2F 표지판을 찾습니다</span></figcaption>
+        </figure>
+        <figure style="margin:0">
+          <img src="assets/img/way-4-stairs.jpg" alt="CLOUNGE 간판 아래 2층으로 올라가는 계단" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;border:2px solid #F1E4C8;background:#F4EBD6">
+          <figcaption style="margin-top:10px;display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.6;color:#4A3828"><span aria-hidden="true" style="flex:none;width:28px;height:28px;border-radius:50%;background:#1F5FA8;color:#FFFFFF;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:14px">4</span><span>이 계단으로 2층에 올라오면 됩니다</span></figcaption>
         </figure>
       </div>
     </div>

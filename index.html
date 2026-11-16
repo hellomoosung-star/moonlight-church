@@ -64,6 +64,9 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
 @media (prefers-reduced-motion:reduce){.pose{animation-name:posefade}.friend{transition:none}.friend:hover{transform:none}.scene,.twinkle,.petal,.float,.idle{animation:none}.hi{animation:none;opacity:1}.hi2{display:none}.card,.card img,.friend img{transition:none}.card:hover,.card:hover img,.friend:hover img{transform:none}}
 @media (max-width:760px){.float{display:none}}
 .scenes{grid-template-columns:repeat(4,minmax(0,1fr))}
+.scene.wide{grid-column:span 2}
+.scene.wide img{height:100%}
+.scenes{grid-auto-flow:dense}
 @media (max-width:860px){.scenes{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .scene img{transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
 .scene:hover img{transform:translateY(-6px)}
@@ -219,25 +222,25 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
       <p style="margin:10px 0 0;font-size:17px;line-height:1.7;color:#6B5340">주일마다 클라운지 서울 관악1호점을 빌려 예배합니다</p>
     </div>
     <div class="scenes" style="margin-top:32px;display:grid;gap:18px">
-      <figure class="scene" style="margin:0">
-        <img src="assets/img/scene-door.jpg" alt="클라운지 입구 문. 금색 글씨로 CLOUNGE라고 적혀 있다" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;background:#F4EBD6">
-        <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">2층 입구</figcaption>
+      <figure class="scene wide" style="margin:0">
+        <img src="assets/img/scene-space1.jpg" alt="둥근 탁자와 의자, 벽걸이 화면이 있는 넓고 밝은 실내" loading="lazy" width="1400" height="875" style="display:block;width:100%;height:auto;aspect-ratio:1400/875;object-fit:cover;border-radius:24px;background:#F4EBD6">
+        <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">넓고 밝은 실내</figcaption>
       </figure>
-      <figure class="scene" style="margin:0">
-        <img src="assets/img/scene-round.jpg" alt="둥근 나무 탁자와 의자가 놓인 넓은 실내" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;background:#F4EBD6">
-        <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">함께 모이는 자리</figcaption>
+      <figure class="scene wide" style="margin:0">
+        <img src="assets/img/scene-gather.jpg" alt="주일 오전, 둥근 탁자에 둘러앉아 예배를 기다리는 사람들. 얼굴은 흐리게 처리했다" loading="lazy" width="1400" height="875" style="display:block;width:100%;height:auto;aspect-ratio:1400/875;object-fit:cover;border-radius:24px;background:#F4EBD6">
+        <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">예배 시작 전, 주일 오전</figcaption>
       </figure>
       <figure class="scene" style="margin:0">
         <img src="assets/img/scene-table.jpg" alt="여럿이 둘러앉는 긴 나무 탁자" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;background:#F4EBD6">
         <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">둘러앉는 긴 탁자</figcaption>
       </figure>
       <figure class="scene" style="margin:0">
-        <img src="assets/img/scene-wall.jpg" alt="CLOUNGE 로고가 있는 벽과 화분, 둥근 탁자" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;background:#F4EBD6">
-        <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">밝고 따뜻한 실내</figcaption>
-      </figure>
-      <figure class="scene" style="margin:0">
         <img src="assets/img/scene-sofa.jpg" alt="흰 소파와 낮은 탁자가 있는 자리" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;background:#F4EBD6">
         <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">쉬어 가는 소파</figcaption>
+      </figure>
+      <figure class="scene wide" style="margin:0">
+        <img src="assets/img/scene-space2.jpg" alt="벽걸이 화면 앞에 둥근 탁자가 놓인 자리와 CLOUNGE 로고 벽" loading="lazy" width="1400" height="875" style="display:block;width:100%;height:auto;aspect-ratio:1400/875;object-fit:cover;border-radius:24px;background:#F4EBD6">
+        <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">화면이 있는 모임 자리</figcaption>
       </figure>
       <figure class="scene" style="margin:0">
         <img src="assets/img/scene-stand.jpg" alt="보면대 위에 놓인 주보" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;background:#F4EBD6">
@@ -250,6 +253,10 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
       <figure class="scene" style="margin:0">
         <img src="assets/img/scene-coffee.jpg" alt="커피가 내려지는 커피 머신과 검은 잔" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;background:#F4EBD6">
         <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">커피 한 잔</figcaption>
+      </figure>
+      <figure class="scene" style="margin:0">
+        <img src="assets/img/scene-door.jpg" alt="클라운지 입구 문. 금색 글씨로 CLOUNGE라고 적혀 있다" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;background:#F4EBD6">
+        <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">2층 입구 문</figcaption>
       </figure>
     </div>
     <div style="margin-top:28px;text-align:center"><a href="worship.html" style="display:inline-flex;align-items:center;min-height:50px;padding:0 28px;border-radius:999px;background:#1F5FA8;color:#FFFFFF;text-decoration:none;font-weight:700;font-size:16px">오시는 길 보기 →</a></div>
