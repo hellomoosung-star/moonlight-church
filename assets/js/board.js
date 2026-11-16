@@ -5,7 +5,7 @@ import {
   getAuth, onAuthStateChanged, signInAnonymously, signInWithPopup, GoogleAuthProvider, signOut
 } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 import {
-  getFirestore, collection, query, orderBy, limit, startAfter, getDocs, getDoc, setDoc, addDoc, deleteDoc, doc, serverTimestamp
+  getFirestore, collection, query, orderBy, limit, getDocs, getDoc, setDoc, addDoc, deleteDoc, doc, serverTimestamp, getCountFromServer
 } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
 // 브라우저에 공개되는 연결 정보다. 비밀 값이 아니다.
@@ -19,7 +19,6 @@ const firebaseConfig = {
 };
 // 화면에 관리자 버튼을 보일지 정할 때만 쓴다. 실제 권한은 firestore.rules 의 목록이 정한다.
 const ADMIN_EMAILS = ['hello.moosung@gmail.com', 'boxter011@gmail.com'];
-const PAGE = 20;
 const FACES = ['dali', 'mongi', 'byeoli', 'toto'];
 
 const app = initializeApp(firebaseConfig);
@@ -70,74 +69,162 @@ function toBlocks(text) {
 }
 function field(form, name) { return form.elements[name].value.trim(); }
 
+/* ---------- 쪽 번호 ---------- */
+// 쪽이 많으면 처음, 끝, 지금 쪽 둘레만 보이고 나머지는 … 으로 줄인다
+function pager(pages, current, onGo, label) {
+  const nav = el('nav', { class: 'pager', 'aria-label': label });
+  const btn = (text, n, opts) => {
+    const b = el('button', Object.assign({ class: 'pg', type: 'button', text }, opts || {}));
+    if (n < 0 || n >= pages) b.disabled = true;
+    else b.addEventListener('click', () => onGo(n));
+    return b;
+  };
+  nav.appendChild(btn('‹ 이전', current - 1));
+  let gap = false;
+  for (let n = 0; n < pages; n++) {
+    if (n === 0 || n === pages - 1 || Math.abs(n - current) <= 2) {
+      nav.appendChild(btn(String(n + 1), n, { class: 'pg num', 'aria-current': n === current ? 'page' : null, 'aria-label': (n + 1) + '쪽' }));
+      gap = false;
+    } else if (!gap) {
+      nav.appendChild(el('span', { class: 'pg-gap', 'aria-hidden': 'true', text: '…' }));
+      gap = true;
+    }
+  }
+  nav.appendChild(btn('다음 ›', current + 1));
+  return nav;
+}
+
 /* ---------- 후기·나눔 ---------- */
 function setupPosts() {
   const list = document.getElementById('post-list');
   const form = document.getElementById('post-form');
   if (!list || !form) return;
   const status = document.getElementById('post-status');
-  const moreBtn = document.getElementById('post-more');
-  let last = null;
-  let items = [];
+  const pagerBox = document.getElementById('post-pager');
+  const searchForm = document.getElementById('post-search');
+  const searchNote = document.getElementById('post-search-note');
+  const searchClear = document.getElementById('post-search-clear');
+  const PER = 10;      // 한 쪽에 보이는 글 수
+  const MAX = 3000;    // 검색·쪽 넘김을 위해 한 번에 불러오는 최대 글 수
+  let recent = [];     // 처음에 불러온 가장 최근 글 PER 편
+  let all = null;      // 전체 글. 검색하거나 2쪽 이상으로 갈 때에만 불러온다
+  let total = 0;
+  let pageNo = 0;
+  let words = '';
 
   try { form.elements.name.value = localStorage.getItem('moon-name') || ''; } catch (e) { /* 저장소를 못 쓰는 브라우저 */ }
 
-  function draw() {
-    list.textContent = '';
-    if (!items.length) {
-      list.appendChild(el('p', { class: 'b-empty', text: '아직 올라온 글이 없습니다. 첫 글을 남겨 주세요.' }));
-      return;
-    }
-    // 카카오톡 대화처럼: 글마다 말풍선 하나, 왼쪽과 오른쪽에 번갈아 놓는다
-    items.forEach((p, i) => {
-      const right = i % 2 === 1;
-      const name = p.name || '이름 없음';
-      const body = el('p', { class: 'k-body', text: p.body });
-      const bubble = el('div', { class: 'k-bubble' }, [el('h3', { class: 'k-title', text: p.title }), body]);
-      const more = el('button', { class: 'k-more', type: 'button', 'aria-expanded': 'false', text: '더보기' });
-      more.hidden = true;
-      more.addEventListener('click', () => {
-        const open = body.classList.toggle('open');
-        more.textContent = open ? '접기' : '더보기';
-        more.setAttribute('aria-expanded', open ? 'true' : 'false');
-      });
-      bubble.appendChild(more);
-      const side = el('div', { class: 'k-side' }, [el('span', { class: 'k-date', text: fmtDate(toDate(p.createdAt)) })]);
-      if (isAdmin() || (user && p.uid === user.uid)) {
-        side.appendChild(deleteButton(() => deleteDoc(doc(db, 'posts', p.id)).then(() => {
-          items = items.filter((x) => x.id !== p.id);
-          draw();
-        })));
-      }
-      let seed = 0;
-      for (const ch of name) seed += ch.codePointAt(0);
-      const face = el('img', { class: 'k-face', src: 'assets/img/' + FACES[seed % FACES.length] + '-hello.jpg', alt: '' });
-      list.appendChild(el('article', { class: 'k-msg' + (right ? ' right' : '') }, [
-        face,
-        el('div', { class: 'k-col' }, [el('div', { class: 'k-name', text: name }), el('div', { class: 'k-line' }, [bubble, side])])
-      ]));
-      // 네 줄을 넘는 글에만 "더보기"를 보인다
-      if (body.scrollHeight > body.clientHeight + 2) more.hidden = false;
+  function bubble(p) {
+    // 올라온 순서(오래된 글부터 0, 1, 2 …)로 좌우를 정한다. 새 글이 올라와도 예전 글의 자리는 그대로다.
+    const right = p.order % 2 === 1;
+    const name = p.name || '이름 없음';
+    const body = el('p', { class: 'k-body', text: p.body });
+    const box = el('div', { class: 'k-bubble' }, [el('h3', { class: 'k-title', text: p.title }), body]);
+    const more = el('button', { class: 'k-more', type: 'button', 'aria-expanded': 'false', text: '더보기' });
+    more.hidden = true;
+    more.addEventListener('click', () => {
+      const open = body.classList.toggle('open');
+      more.textContent = open ? '접기' : '더보기';
+      more.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
+    box.appendChild(more);
+    const side = el('div', { class: 'k-side' }, [el('span', { class: 'k-date', text: fmtDate(toDate(p.createdAt)) })]);
+    if (isAdmin() || (user && p.uid === user.uid)) {
+      side.appendChild(deleteButton(() => deleteDoc(doc(db, 'posts', p.id)).then(() => {
+        recent = recent.filter((x) => x.id !== p.id);
+        if (all) all = all.filter((x) => x.id !== p.id);
+        total = Math.max(0, total - 1);
+        draw();
+      })));
+    }
+    let seed = 0;
+    for (const ch of name) seed += ch.codePointAt(0);
+    const face = el('img', { class: 'k-face', src: 'assets/img/' + FACES[seed % FACES.length] + '-hello.jpg', alt: '' });
+    const msg = el('article', { class: 'k-msg' + (right ? ' right' : '') }, [
+      face,
+      el('div', { class: 'k-col' }, [el('div', { class: 'k-name', text: name }), el('div', { class: 'k-line' }, [box, side])])
+    ]);
+    return { msg, body, more };
   }
-  async function load(reset) {
-    if (reset) { last = null; items = []; }
-    const parts = [collection(db, 'posts'), orderBy('createdAt', 'desc')];
-    if (last) parts.push(startAfter(last));
-    parts.push(limit(PAGE));
+  function draw() {
+    const source = all || recent;
+    const q = words.toLowerCase();
+    const shown = q
+      ? source.filter((p) => [p.name, p.title, p.body].some((t) => String(t || '').toLowerCase().includes(q)))
+      : source;
+    const count = q ? shown.length : total;
+    const pages = Math.max(1, Math.ceil(count / PER));
+    pageNo = Math.min(pageNo, pages - 1);
+    const slice = q || all ? shown.slice(pageNo * PER, (pageNo + 1) * PER) : shown.slice(0, PER);
+
+    searchNote.hidden = !q;
+    searchClear.hidden = !q;
+    if (q) searchNote.textContent = '“' + words + '” 검색 결과 ' + shown.length + '건';
+
+    list.textContent = '';
+    if (!slice.length) {
+      list.appendChild(el('p', { class: 'b-empty', text: q ? '찾는 글이 없습니다. 다른 낱말로 찾아보세요.' : '아직 올라온 글이 없습니다. 첫 글을 남겨 주세요.' }));
+    }
+    slice.forEach((p) => {
+      const b = bubble(p);
+      list.appendChild(b.msg);
+      if (b.body.scrollHeight > b.body.clientHeight + 2) b.more.hidden = false; // 네 줄을 넘는 글에만 "더보기"
+    });
+    pagerBox.textContent = '';
+    if (pages > 1) {
+      pagerBox.appendChild(pager(pages, pageNo, async (n) => {
+        if (n > 0 && !all) await loadAll();
+        pageNo = n;
+        draw();
+        list.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      }, '지난 글 쪽 번호'));
+    }
+  }
+  function number(items, count) {
+    items.forEach((p, i) => { p.order = count - 1 - i; });
+    return items;
+  }
+  async function loadFirst() {
     try {
-      const snap = await getDocs(query(...parts));
-      snap.forEach((d) => items.push({ id: d.id, ...d.data() }));
-      last = snap.docs[snap.docs.length - 1] || last;
-      moreBtn.hidden = snap.size < PAGE;
+      const [snap, counted] = await Promise.all([
+        getDocs(query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(PER))),
+        getCountFromServer(collection(db, 'posts'))
+      ]);
+      total = counted.data().count;
+      recent = number(snap.docs.map((d) => ({ id: d.id, ...d.data() })), total);
+      all = null;
       draw();
     } catch (e) {
       list.textContent = '';
       list.appendChild(el('p', { class: 'b-empty', text: '글을 불러오지 못했습니다. 잠시 뒤에 다시 열어 주세요.' }));
     }
   }
-  moreBtn.addEventListener('click', () => load(false));
+  async function loadAll() {
+    const snap = await getDocs(query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(MAX)));
+    total = Math.max(total, snap.size);
+    all = number(snap.docs.map((d) => ({ id: d.id, ...d.data() })), total);
+  }
   refreshers.push(draw);
+
+  searchForm.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const text = searchForm.elements.q.value.trim();
+    if (!text) { words = ''; pageNo = 0; draw(); return; }
+    searchNote.hidden = false;
+    searchNote.textContent = '찾는 중입니다…';
+    try {
+      if (!all) await loadAll();
+      words = text;
+      pageNo = 0;
+      draw();
+    } catch (e) { searchNote.textContent = errText(e); }
+  });
+  searchClear.addEventListener('click', () => {
+    searchForm.elements.q.value = '';
+    words = '';
+    pageNo = 0;
+    draw();
+  });
 
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
@@ -156,13 +243,52 @@ function setupPosts() {
       form.elements.title.value = '';
       form.elements.body.value = '';
       status.textContent = '글을 올렸습니다. 고맙습니다.';
-      await load(true);
+      searchForm.elements.q.value = '';
+      words = '';
+      pageNo = 0;
+      await loadFirst();
     } catch (e) {
       status.textContent = errText(e);
     }
     btn.disabled = false;
   });
-  load(true);
+  loadFirst();
+}
+
+/* ---------- 백업 ---------- */
+// 관리자가 누르면 게시판 글 전체를 파일 하나로 내려받는다. 주보 그림은 용량이 커서 목록만 담는다.
+function setupBackup() {
+  const btn = document.getElementById('backup-button');
+  if (!btn) return;
+  const status = document.getElementById('backup-status');
+  const plain = (v) => (v && typeof v.toDate === 'function' ? v.toDate().toISOString() : v);
+  btn.addEventListener('click', async () => {
+    btn.disabled = true;
+    status.textContent = '글을 모으는 중입니다…';
+    try {
+      const out = { savedAt: new Date().toISOString(), site: 'https://www.lightofmoon.org' };
+      for (const name of ['posts', 'notices', 'youth', 'bulletins']) {
+        const snap = await getDocs(query(collection(db, name), limit(5000)));
+        out[name] = snap.docs.map((d) => {
+          const row = { id: d.id };
+          Object.entries(d.data()).forEach(([k, v]) => { row[k] = plain(v); });
+          return row;
+        });
+      }
+      const blob = new Blob([JSON.stringify(out, null, 1)], { type: 'application/json' });
+      const link = el('a', { href: URL.createObjectURL(blob), download: '달빛교회-게시판-백업-' + toDate() + '.json' });
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(link.href), 10000);
+      try { localStorage.setItem('moon-backup', toDate()); } catch (e) { /* 무시 */ }
+      status.textContent = '내려받았습니다. 후기 ' + out.posts.length + '편, 설교 안내 ' + out.notices.length + '편, 청소년 설교문 ' + out.youth.length + '편.';
+    } catch (e) { status.textContent = errText(e); }
+    btn.disabled = false;
+  });
+  let last = '';
+  try { last = localStorage.getItem('moon-backup') || ''; } catch (e) { /* 무시 */ }
+  status.textContent = last ? '이 기기에서 마지막으로 내려받은 날: ' + fmtDate(last) : '이 기기에서는 아직 내려받은 적이 없습니다.';
 }
 
 /* ---------- 주보 ---------- */
@@ -261,22 +387,7 @@ function setupBulletins() {
     });
     box.appendChild(el('div', { class: 'yend' }));
     if (pages > 1) {
-      const go = (n) => () => { pageNo = n; openId = null; draw(); box.scrollIntoView({ block: 'nearest' }); };
-      const nav = el('nav', { class: 'pager', 'aria-label': '지난 주보 쪽 번호' });
-      const prev = el('button', { class: 'pg', type: 'button', text: '‹ 이전' });
-      prev.disabled = pageNo === 0;
-      prev.addEventListener('click', go(pageNo - 1));
-      nav.appendChild(prev);
-      for (let n = 0; n < pages; n++) {
-        const b = el('button', { class: 'pg num', type: 'button', text: String(n + 1), 'aria-current': n === pageNo ? 'page' : null, 'aria-label': (n + 1) + '쪽' });
-        b.addEventListener('click', go(n));
-        nav.appendChild(b);
-      }
-      const next = el('button', { class: 'pg', type: 'button', text: '다음 ›' });
-      next.disabled = pageNo === pages - 1;
-      next.addEventListener('click', go(pageNo + 1));
-      nav.appendChild(next);
-      box.appendChild(nav);
+      box.appendChild(pager(pages, pageNo, (n) => { pageNo = n; openId = null; draw(); box.scrollIntoView({ block: 'nearest' }); }, '지난 주보 쪽 번호'));
     }
   }
   async function load() {
@@ -288,7 +399,6 @@ function setupBulletins() {
     ]);
     items = files.map((b) => ({ ...b, id: 'file-' + b.date })).concat(live)
       .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
-    if (openId === null && items.length) openId = items[0].id; // 가장 최근 주보는 펼쳐 둔다
     draw();
   }
   refreshers.push(draw);
@@ -460,6 +570,7 @@ function setupAdminBar() {
 
 setupBulletins();
 setupPosts();
+setupBackup();
 setupNotices();
 setupYouth();
 const refreshAdmin = setupAdminBar();
