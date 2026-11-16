@@ -74,6 +74,8 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
 .ybody p.q{background:#FFFDF6;border-radius:18px;padding:16px 20px;line-height:1.85;color:#22428F;font-weight:500}
 .yclose{display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border-radius:999px;border:2px solid #1F5FA8;background:#FFFFFF;color:#1F5FA8;font-weight:700;font-size:15px;font-family:inherit;cursor:pointer}
 .yend{border-top:2px solid #F1E4C8}
+.nav-x{display:inline}
+@media (max-width:640px){.nav{flex-wrap:nowrap!important;gap:0!important;justify-content:space-between;width:calc(100% + 32px);margin:0 -16px;font-size:3.25vw!important}.nav a{padding:10px 1.2vw!important;white-space:nowrap}.nav-x{display:none}}
 </style>
 <link rel="stylesheet" href="assets/css/board.css?v=20261117b">
 </head>
@@ -92,7 +94,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
         <a href="worship.html">예배안내</a>
         <a href="sermon.html" aria-current="page" style="background:#FFFFFF;color:#1F5FA8;text-shadow:none">말씀과 설교</a>
         <a href="news.html">소식과 나눔</a>
-        <a href="worship.html#first">새가족안내</a>
+        <a href="newcomer.html">새가족<span class="nav-x">안내</span></a>
       </nav>
     </div>
     <div style="position:relative;max-width:1240px;margin:0 auto;padding:34px 32px 74px;box-sizing:border-box;text-align:center;color:#FFFFFF">
