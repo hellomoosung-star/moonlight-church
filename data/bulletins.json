@@ -1,1 +1,4 @@
-[]
+[
+ { "date": "2026-11-15", "title": "주일 예배 주보", "pages": ["bulletins/2026-11-15-1.png", "bulletins/2026-11-15-2.png"] },
+ { "date": "2026-11-08", "title": "주일 예배 주보", "pages": ["bulletins/2026-11-08-1.png", "bulletins/2026-11-08-2.png"] }
+]
