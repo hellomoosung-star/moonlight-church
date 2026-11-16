@@ -207,7 +207,8 @@ function setupPosts() {
     });
     box.appendChild(more);
     const side = el('div', { class: 'k-side' }, [el('span', { class: 'k-date', text: fmtDate(toDate(p.createdAt)) })]);
-    if (isAdmin()) {
+    if (p.pending) side.appendChild(el('span', { class: 'k-date', text: '올리는 중…' }));
+    if (isAdmin() && !p.pending) {
       // 관리자는 글마다 말머리를 바꿔 줄 수 있다
       const pick = el('select', { class: 'k-retag', 'aria-label': '말머리 바꾸기' }, [el('option', { value: '', text: '말머리 없음' })]
         .concat(tags.map((t) => el('option', { value: t.id, text: t.name }))));
@@ -217,7 +218,7 @@ function setupPosts() {
       });
       side.appendChild(pick);
     }
-    if (isAdmin() || (user && p.uid === user.uid)) {
+    if (!p.pending && (isAdmin() || (user && p.uid === user.uid))) {
       side.appendChild(deleteButton(() => deleteDoc(doc(db, 'posts', p.id)).then(() => {
         recent = recent.filter((x) => x.id !== p.id);
         if (all) all = all.filter((x) => x.id !== p.id);
@@ -228,7 +229,7 @@ function setupPosts() {
     let seed = 0;
     for (const ch of name) seed += ch.codePointAt(0);
     const face = el('img', { class: 'k-face', src: 'assets/img/' + FACES[seed % FACES.length] + '-hello.jpg', alt: '' });
-    const msg = el('article', { class: 'k-msg' + (right ? ' right' : '') }, [
+    const msg = el('article', { class: 'k-msg' + (right ? ' right' : '') + (p.pending ? ' pending' : '') }, [
       face,
       el('div', { class: 'k-col' }, [el('div', { class: 'k-name', text: name }), el('div', { class: 'k-line' }, [box, side])])
     ]);
@@ -333,30 +334,47 @@ function setupPosts() {
     if (!tag && tags.some((t) => !t.hidden)) { status.textContent = '말머리를 하나 골라 주세요.'; return; }
     const btn = form.querySelector('[type=submit]');
     btn.disabled = true;
+    // 누르자마자 화면에 먼저 보여 주고, 저장은 뒤에서 한다. 저장에 실패하면 말풍선을 거두고 쓴 글을 칸에 되돌린다.
+    const shownPost = { id: 'pending-' + Date.now(), name, title, body, tag: tag || undefined, uid: null, createdAt: null, order: total, pending: true };
+    recent = [shownPost].concat(recent).slice(0, PER);
+    if (all) all = [shownPost].concat(all);
+    total += 1;
+    searchForm.elements.q.value = '';
+    words = '';
+    tagFilter = '';
+    pageNo = 0;
+    form.elements.title.value = '';
+    form.elements.body.value = '';
+    form.querySelectorAll('input[name=tag]').forEach((r) => { r.checked = false; });
     status.textContent = '올리는 중입니다…';
+    draw();
+    list.scrollIntoView({ block: 'start', behavior: 'smooth' });
     try {
       if (!auth.currentUser) await signInAnonymously(auth);
       const post = { name, title, body, uid: auth.currentUser.uid, createdAt: serverTimestamp() };
+      let ref;
       try {
-        await addDoc(collection(db, 'posts'), tag ? Object.assign({ tag }, post) : post);
+        ref = await addDoc(collection(db, 'posts'), tag ? Object.assign({ tag }, post) : post);
       } catch (e) {
         // 보안 규칙이 아직 말머리 칸을 모르면 말머리 없이 올린다
         if (!tag || !String(e.code || '').includes('permission-denied')) throw e;
-        await addDoc(collection(db, 'posts'), post);
+        ref = await addDoc(collection(db, 'posts'), post);
+        shownPost.tag = undefined;
       }
-      form.querySelectorAll('input[name=tag]').forEach((r) => { r.checked = false; });
-      tagFilter = '';
+      shownPost.id = ref.id;
+      shownPost.uid = auth.currentUser.uid;
+      shownPost.pending = false;
       try { localStorage.setItem('moon-name', name); } catch (e) { /* 무시 */ }
-      form.elements.title.value = '';
-      form.elements.body.value = '';
       status.textContent = '글을 올렸습니다. 고맙습니다.';
-      searchForm.elements.q.value = '';
-      words = '';
-      pageNo = 0;
-      await loadFirst();
     } catch (e) {
-      status.textContent = errText(e);
+      recent = recent.filter((x) => x !== shownPost);
+      if (all) all = all.filter((x) => x !== shownPost);
+      total = Math.max(0, total - 1);
+      form.elements.title.value = title;
+      form.elements.body.value = body;
+      status.textContent = errText(e) + ' 쓰신 글은 칸에 그대로 두었습니다.';
     }
+    draw();
     btn.disabled = false;
   });
   loadTags().then(loadFirst);
