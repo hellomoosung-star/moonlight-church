@@ -59,3 +59,29 @@ details.b-admin summary{cursor:pointer;font-weight:700;font-size:16px;color:#1F5
 .ydate{flex:none;font-size:14px;color:#6B5340}
 .ymore{flex:none;font-weight:700;font-size:15px;color:#1F5FA8}
 .yend{border-top:2px solid #F1E4C8}
+/* 후기·나눔: 대화방처럼 말풍선으로 */
+.k-room{margin-top:18px;background:#CFE1F2;border-radius:30px;padding:clamp(16px,3vw,28px);display:grid;gap:18px}
+.k-room .b-empty{margin:0;text-align:center;color:#3B4F66}
+.k-msg{display:flex;align-items:flex-start;gap:10px;max-width:min(100%,640px)}
+.k-msg.right{flex-direction:row-reverse;margin-left:auto}
+.k-face{flex:none;width:46px;height:46px;border-radius:18px;object-fit:cover;object-position:50% 12%;background:#FFFDF6}
+.k-col{min-width:0}
+.k-name{font-size:14px;font-weight:700;color:#2F4257;margin:0 4px 4px}
+.k-msg.right .k-name{text-align:right}
+.k-line{display:flex;align-items:flex-end;gap:8px}
+.k-msg.right .k-line{flex-direction:row-reverse}
+.k-bubble{min-width:0;background:#FFFFFF;border-radius:4px 20px 20px 20px;padding:12px 16px;box-shadow:0 2px 0 rgba(40,70,110,.12)}
+.k-msg.right .k-bubble{background:#FFE55C;border-radius:20px 4px 20px 20px}
+.k-title{margin:0;font-size:17px;font-weight:900;line-height:1.45;overflow-wrap:anywhere}
+.k-body{margin:4px 0 0;font-size:16px;line-height:1.75;color:#2B2118;white-space:pre-wrap;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}
+.k-body.open{display:block;overflow:visible}
+.k-more{margin-top:6px;min-height:36px;padding:0 2px;border:0;background:none;color:#1F5FA8;font:inherit;font-weight:700;font-size:14px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.k-side{flex:none;display:grid;gap:6px;justify-items:start;font-size:12px;color:#3B4F66;padding-bottom:2px}
+.k-msg.right .k-side{justify-items:end}
+.k-date{white-space:nowrap}
+/* 좁은 화면에서는 날짜와 삭제 버튼을 말풍선 아래로 내린다 */
+@media (max-width:600px){
+  .k-line,.k-msg.right .k-line{flex-direction:column;align-items:flex-start;gap:4px}
+  .k-msg.right .k-line{align-items:flex-end}
+  .k-side,.k-msg.right .k-side{display:flex;align-items:center;gap:8px;padding:0 4px}
+}

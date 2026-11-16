@@ -20,6 +20,7 @@ const firebaseConfig = {
 // 화면에 관리자 버튼을 보일지 정할 때만 쓴다. 실제 권한은 firestore.rules 의 목록이 정한다.
 const ADMIN_EMAILS = ['hello.moosung@gmail.com', 'boxter011@gmail.com'];
 const PAGE = 20;
+const FACES = ['dali', 'mongi', 'byeoli', 'toto'];
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -87,19 +88,36 @@ function setupPosts() {
       list.appendChild(el('p', { class: 'b-empty', text: '아직 올라온 글이 없습니다. 첫 글을 남겨 주세요.' }));
       return;
     }
-    items.forEach((p) => {
-      const meta = el('div', { class: 'b-meta' }, [el('span', { text: (p.name || '이름 없음') + ' · ' + fmtDate(toDate(p.createdAt)) })]);
+    // 카카오톡 대화처럼: 글마다 말풍선 하나, 왼쪽과 오른쪽에 번갈아 놓는다
+    items.forEach((p, i) => {
+      const right = i % 2 === 1;
+      const name = p.name || '이름 없음';
+      const body = el('p', { class: 'k-body', text: p.body });
+      const bubble = el('div', { class: 'k-bubble' }, [el('h3', { class: 'k-title', text: p.title }), body]);
+      const more = el('button', { class: 'k-more', type: 'button', 'aria-expanded': 'false', text: '더보기' });
+      more.hidden = true;
+      more.addEventListener('click', () => {
+        const open = body.classList.toggle('open');
+        more.textContent = open ? '접기' : '더보기';
+        more.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      bubble.appendChild(more);
+      const side = el('div', { class: 'k-side' }, [el('span', { class: 'k-date', text: fmtDate(toDate(p.createdAt)) })]);
       if (isAdmin() || (user && p.uid === user.uid)) {
-        meta.appendChild(deleteButton(() => deleteDoc(doc(db, 'posts', p.id)).then(() => {
+        side.appendChild(deleteButton(() => deleteDoc(doc(db, 'posts', p.id)).then(() => {
           items = items.filter((x) => x.id !== p.id);
           draw();
         })));
       }
-      list.appendChild(el('article', { class: 'b-post' }, [
-        el('h3', { class: 'b-title', text: p.title }),
-        el('p', { class: 'b-body', text: p.body }),
-        meta
+      let seed = 0;
+      for (const ch of name) seed += ch.codePointAt(0);
+      const face = el('img', { class: 'k-face', src: 'assets/img/' + FACES[seed % FACES.length] + '-hello.jpg', alt: '' });
+      list.appendChild(el('article', { class: 'k-msg' + (right ? ' right' : '') }, [
+        face,
+        el('div', { class: 'k-col' }, [el('div', { class: 'k-name', text: name }), el('div', { class: 'k-line' }, [bubble, side])])
       ]));
+      // 네 줄을 넘는 글에만 "더보기"를 보인다
+      if (body.scrollHeight > body.clientHeight + 2) more.hidden = false;
     });
   }
   async function load(reset) {
