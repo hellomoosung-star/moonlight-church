@@ -447,9 +447,57 @@ async function shrinkImage(file) {
   }
   throw Object.assign(new Error('too large'), { code: 'image-too-large' });
 }
+// 주보 그림을 누르면 화면 가득 크게 보여 준다. 한 번 더 누르면 누른 자리를 중심으로 확대된다.
+function openViewer(src, alt, opener) {
+  const img = el('img', { class: 'bv-img', src, alt });
+  const scroll = el('div', { class: 'bv-scroll' }, [img]);
+  const zoom = el('button', { class: 'bv-btn', type: 'button', text: '더 크게 +' });
+  const close = el('button', { class: 'bv-btn bv-close', type: 'button', text: '닫기 ✕' });
+  const wrap = el('div', { class: 'bv', role: 'dialog', 'aria-modal': 'true', 'aria-label': alt + ' 크게 보기' },
+    [scroll, el('div', { class: 'bv-bar' }, [zoom, close])]);
+  let big = false;
+  function setBig(on, fx, fy) {
+    big = on;
+    img.classList.toggle('big', big);
+    zoom.textContent = big ? '작게 −' : '더 크게 +';
+    if (big) { // 누른 자리가 화면 가운데로 오게
+      scroll.scrollLeft = Math.max(0, (fx == null ? 0.5 : fx) * scroll.scrollWidth - scroll.clientWidth / 2);
+      scroll.scrollTop = Math.max(0, (fy == null ? 0 : fy) * scroll.scrollHeight - scroll.clientHeight / 2);
+    }
+  }
+  function shut() {
+    document.removeEventListener('keydown', onKey);
+    document.documentElement.style.overflow = '';
+    wrap.remove();
+    if (opener && opener.focus) opener.focus();
+  }
+  function onKey(ev) { if (ev.key === 'Escape') shut(); }
+  img.addEventListener('click', (ev) => {
+    const r = img.getBoundingClientRect();
+    setBig(!big, (ev.clientX - r.left) / r.width, (ev.clientY - r.top) / r.height);
+  });
+  zoom.addEventListener('click', () => setBig(!big));
+  close.addEventListener('click', shut);
+  scroll.addEventListener('click', (ev) => { if (ev.target === scroll) shut(); });
+  document.addEventListener('keydown', onKey);
+  document.documentElement.style.overflow = 'hidden';
+  document.body.appendChild(wrap);
+  close.focus();
+  // 휴대폰에서는 처음부터 글씨가 읽히는 크기로 연다 (맨 위 왼쪽부터)
+  if (window.matchMedia('(max-width:600px)').matches) setBig(true, 0, 0);
+}
+
 function setupBulletins() {
   const box = document.getElementById('bulletin-list');
   if (!box) return;
+  box.addEventListener('click', (ev) => {
+    const t = ev.target;
+    if (t && t.classList && t.classList.contains('bl-page')) openViewer(t.src, t.alt, t);
+  });
+  box.addEventListener('keydown', (ev) => {
+    const t = ev.target;
+    if ((ev.key === 'Enter' || ev.key === ' ') && t && t.classList && t.classList.contains('bl-page')) { ev.preventDefault(); openViewer(t.src, t.alt, t); }
+  });
   const form = document.getElementById('bulletin-form');
   const status = document.getElementById('bulletin-status');
   const PER_PAGE = 4; // 한 번에 보이는 주보 수. 지난 주보는 쪽 번호로 넘긴다
@@ -462,14 +510,14 @@ function setupBulletins() {
     holder.appendChild(el('p', { class: 'b-empty', text: '주보를 불러오는 중입니다…' }));
     if (b.pages) { // 저장소에 파일로 들어 있는 주보 (data/bulletins.json)
       holder.textContent = '';
-      b.pages.forEach((src, n) => holder.appendChild(el('img', { class: 'bl-page', src, alt: fmtDate(b.date) + ' 주보 ' + (n + 1) + '쪽' })));
+      b.pages.forEach((src, n) => holder.appendChild(el('img', { class: 'bl-page', tabindex: '0', role: 'button', title: '누르면 크게 봅니다', src, alt: fmtDate(b.date) + ' 주보 ' + (n + 1) + '쪽' })));
       return;
     }
     try {
       const snaps = await Promise.all(Array.from({ length: b.count }, (_, n) => getDoc(doc(db, 'bulletinPages', b.id + '_' + n))));
       holder.textContent = '';
       snaps.forEach((sn, n) => {
-        if (sn.exists()) holder.appendChild(el('img', { class: 'bl-page', src: sn.data().data, alt: fmtDate(b.date) + ' 주보 ' + (n + 1) + '쪽' }));
+        if (sn.exists()) holder.appendChild(el('img', { class: 'bl-page', tabindex: '0', role: 'button', title: '누르면 크게 봅니다', src: sn.data().data, alt: fmtDate(b.date) + ' 주보 ' + (n + 1) + '쪽' }));
       });
     } catch (e) {
       holder.textContent = '';
@@ -498,6 +546,7 @@ function setupBulletins() {
       const row = el('div', { class: 'yrow' }, [head, holder]);
       if (open) {
         showPages(b, holder).then(() => {
+          if (holder.querySelector('.bl-page')) holder.insertBefore(el('p', { class: 'bl-hint', text: '주보 그림을 누르면 화면 가득 크게 볼 수 있습니다.' }), holder.firstChild);
           if (isAdmin() && !b.pages) {
             holder.appendChild(el('div', { style: 'text-align:center;margin-top:12px' }, [deleteButton(async () => {
               await Promise.all(Array.from({ length: b.count }, (_, n) => deleteDoc(doc(db, 'bulletinPages', b.id + '_' + n))));
@@ -525,7 +574,11 @@ function setupBulletins() {
     ]);
     items = files.map((b) => ({ ...b, id: 'file-' + b.date })).concat(live)
       .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+    // 다른 페이지에서 "이번 주 주보"를 누르고 왔으면 가장 최근 주보를 펼쳐 둔다
+    const latest = location.hash === '#bulletin-latest' && items.length;
+    if (latest) openId = items[0].id;
     draw();
+    if (latest) document.getElementById('bulletin').scrollIntoView({ block: 'start' });
   }
   refreshers.push(draw);
   form.addEventListener('submit', async (ev) => {

@@ -49,7 +49,19 @@ details.b-admin summary{cursor:pointer;font-weight:700;font-size:16px;color:#1F5
 .admin-btn{min-height:44px;padding:0 14px;border:0;background:none;color:#6B5340;font:inherit;font-size:13px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 /* 주보 */
 .bl-pages{background:#FEF7E8;border-radius:24px;padding:clamp(12px,3vw,28px);margin:0 0 22px;display:grid;gap:16px;justify-items:center}
-.bl-page{display:block;width:100%;max-width:760px;height:auto;border-radius:12px;border:2px solid #F1E4C8;background:#FFFFFF}
+.bl-page{display:block;width:100%;max-width:760px;height:auto;border-radius:12px;border:2px solid #F1E4C8;background:#FFFFFF;cursor:zoom-in}
+.bl-page:focus-visible{outline:3px solid #1F5FA8;outline-offset:3px}
+.bl-hint{margin:0;font-size:14px;font-weight:700;color:#1F5FA8;text-align:center}
+@media (max-width:600px){.bl-pages{margin-left:-14px;margin-right:-14px;padding:6px;border-radius:14px;gap:8px}.bl-page{border-radius:8px;border-width:1px}}
+.bv{position:fixed;inset:0;z-index:1000;background:rgba(20,16,12,.94);display:flex;flex-direction:column}
+.bv-scroll{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-x pan-y pinch-zoom}
+.bv-img{display:block;width:100%;max-width:1000px;height:auto;margin:0 auto;background:#FFFFFF;cursor:zoom-in}
+.bv-img.big{width:240%;max-width:2103px;cursor:zoom-out}
+@media (min-width:900px){.bv-img.big{width:160%}}
+.bv-bar{flex:none;display:flex;justify-content:center;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#1B1612}
+.bv-btn{min-height:46px;padding:0 22px;border-radius:999px;border:2px solid #FFFFFF;background:transparent;color:#FFFFFF;font-family:inherit;font-weight:700;font-size:16px;cursor:pointer}
+.bv-close{background:#FFFFFF;color:#1B1612}
+.bv-btn:focus-visible{outline:3px solid #FFE27A;outline-offset:2px}
 .b-form input[type=file]{padding:10px;font-size:15px}
 /* 줄 목록 (주보, 청소년 설교문 공통) */
 .yrow{border-top:2px solid #F1E4C8}
