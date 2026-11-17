@@ -24,7 +24,8 @@
    ```json
    { "date": "2026-11-22", "title": "주일 예배 주보", "pages": ["bulletins/2026-11-22-1.png", "bulletins/2026-11-22-2.png"] }
    ```
-4. 커밋해서 `main`에 올린다. `news.html`의 주보 칸에 날짜순으로 나타나고, 한 쪽에 4개씩, 모두 접힌 채로 보인다.
+4. 주보 내용을 글로도 넣는다(휴대폰에서 그림은 글씨가 작아 읽기 힘들다). `data/bulletin-text/YYYY-MM-DD.json`을 만들고, 3번 항목에 `"text": "data/bulletin-text/YYYY-MM-DD.json"`을 더한다. 구조는 가장 최근 파일을 본뜬다: `issue`, `leader`, `verse`, `order`(일어서는 순서는 `stand`, 설교는 `main`), `sermon`, `sections`(칸마다 `title`·`ref`와 `quote`·`stanzas`·`refrain`·`readings`·`qa`·`paras`·`news`·`sermon:true` 가운데 필요한 것). 성경 구절과 찬송 가사는 주보 원문과 한 글자씩 맞춘다. '처음 오신 분들께'와 연락처 칸은 넣지 않는다.
+5. 커밋해서 `main`에 올린다. 글 주보가 있으면 글이 먼저 보이고, 그림은 "인쇄용 주보(A4) 보기"를 눌러야 나온다. `news.html`의 주보 칸에 날짜순으로 나타나고, 한 쪽에 4개씩, 모두 접힌 채로 보인다.
 
 주보에 교우의 전화번호·주소 같은 개인 정보가 있으면 올리기 전에 사용자에게 확인한다. 저장소와 사이트는 누구나 볼 수 있다.
 

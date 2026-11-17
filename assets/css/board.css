@@ -168,6 +168,14 @@ details.b-admin summary{cursor:pointer;font-weight:700;font-size:16px;color:#1F5
 .bt-news:last-child{border-bottom:0}
 .bt-news-title{font-weight:900;font-size:17px;line-height:1.5}
 .bt-news-body{margin-top:2px;font-size:16px;line-height:1.75;color:#4A3828}
+.bt-para{margin:0 0 10px;font-size:17px;line-height:1.85;color:#4A3828}
+.bt-qa{margin-top:14px}
+.bt-q{font-weight:900;font-size:17px;line-height:1.6}
+.bt-a{margin-top:4px;padding-left:14px;border-left:3px solid #D8CBB0;font-size:17px;line-height:1.85;color:#4A3828}
+.bt-refrain{margin-top:14px;padding-top:12px;border-top:1px dashed #D8CBB0}
+.bt-ref-label{width:auto;font-weight:700;color:#8A6D1C;padding-right:6px}
+.bt-sermon+.bt-qa,.bt-sermon+.bt-para,.bt-sermon+.bt-quote{margin-top:16px}
+@media (max-width:600px){.bt-stanza{font-size:16px}}
 .bt-print-wrap{margin-top:26px;text-align:center}
 .bt-print{min-height:46px;padding:0 22px;border-radius:999px;border:2px solid #1F5FA8;background:#FFFFFF;color:#1F5FA8;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer}
 .bt-pics{margin-top:14px;display:grid;gap:12px;justify-items:center}
