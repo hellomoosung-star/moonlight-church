@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>교회소개 | 달빛교회</title>
-<meta name="description" content="달빛교회는 성경을 한가운데 두고, 웨스트민스터 신앙고백서와 대·소요리문답, 예배모범, 교회정치를 따라 걷는 장로교회입니다.">
+<meta name="description" content="달빛교회는 성경의 가르침을 따라 바르게 믿고 예배하는 개혁교회입니다. 웨스트민스터 신앙고백서와 대·소요리문답, 예배모범, 교회정치를 신앙의 표준으로 삼는 장로교회입니다.">
 <link rel="canonical" href="https://www.lightofmoon.org/about.html">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="달빛교회">
 <meta property="og:title" content="교회소개 | 달빛교회">
-<meta property="og:description" content="달빛교회는 성경을 한가운데 두고, 웨스트민스터 신앙고백서와 대·소요리문답, 예배모범, 교회정치를 따라 걷는 장로교회입니다.">
+<meta property="og:description" content="달빛교회는 성경의 가르침을 따라 바르게 믿고 예배하는 개혁교회입니다. 웨스트민스터 신앙고백서와 대·소요리문답, 예배모범, 교회정치를 신앙의 표준으로 삼는 장로교회입니다.">
 <meta property="og:url" content="https://www.lightofmoon.org/about.html">
 <meta property="og:image" content="https://www.lightofmoon.org/assets/img/hero.jpg">
 <meta property="og:image:width" content="1536">
@@ -35,6 +35,20 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
 .idle2{animation-delay:-1.4s}
 @keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){.idle{animation:none}.lift,.btn{transition:none}.lift:hover,.btn:hover{transform:none}}
+.fold summary{list-style:none;cursor:default}
+.fold summary::-webkit-details-marker{display:none}
+.fold summary h3{display:block}
+@media (max-width:600px){
+.fold{padding:18px 20px 20px!important;border-radius:24px!important}
+.fold summary{cursor:pointer;position:relative;padding-right:30px}
+.fold summary::after{content:"+";position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:24px;font-weight:700;color:#1F5FA8}
+.fold[open] summary::after{content:"−"}
+.fold summary h3{font-size:19px!important;margin-top:8px!important}
+.folds{gap:12px!important}
+.sec{margin-top:52px!important}
+.bear{display:none}
+.moon{display:none}
+}
 .nav-x{display:inline}
 @media (max-width:640px){.nav{flex-wrap:nowrap!important;gap:0!important;justify-content:space-between;width:calc(100% + 32px);margin:0 -16px;font-size:3.25vw!important}.nav a{padding:10px 1.2vw!important;white-space:nowrap}.nav-x{display:none}}
 </style>
@@ -60,7 +74,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
     <div style="position:relative;max-width:1240px;margin:0 auto;padding:34px 32px 74px;box-sizing:border-box;text-align:center;color:#FFFFFF">
       <div style="font-family:'Gaegu',sans-serif;font-weight:700;font-size:22px;text-shadow:0 1px 6px rgba(20,60,120,.5)">☾ 교회소개</div>
       <h1 style="margin:4px 0 0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(44px,5.4vw,68px);line-height:1.15;text-shadow:0 3px 0 rgba(24,80,150,.45),0 0 24px rgba(24,80,150,.35)">달빛교회는 어떤 교회인가요?</h1>
-      <p style="margin:12px auto 0;max-width:34em;font-size:18px;font-weight:500;line-height:1.7;text-shadow:0 1px 8px rgba(20,60,120,.65)">성경의 빛을 받아 세상을 비추는 작은 교회입니다</p>
+      <p style="margin:12px auto 0;max-width:34em;font-size:18px;font-weight:500;line-height:1.7;text-shadow:0 1px 8px rgba(20,60,120,.65)">성경의 가르침을 따라 바르게 믿고 예배하는 개혁교회입니다</p>
     </div>
     <svg aria-hidden="true" viewBox="0 0 1280 40" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-1px;display:block;width:100%;height:34px"><path d="M0 40 L0 22 C80 6 160 30 240 18 C330 4 420 30 520 20 C620 8 700 32 800 20 C900 6 990 30 1080 18 C1160 8 1220 26 1280 16 L1280 40 Z" fill="#FEF7E8"/></svg>
   </div>
@@ -71,78 +85,72 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
       <div style="flex:999 1 420px;min-width:0">
         <div style="font-family:'Gaegu',sans-serif;font-weight:700;font-size:22px;color:#2F8A4B">☾ 우리가 바라는 교회</div>
         <h2 style="margin:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(34px,4vw,46px);line-height:1.2">그리스도가 다스리시는 교회</h2>
-        <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#4A3828">달빛교회는 ‘그리스도가 다스리시는 교회’가 되기를 바랍니다. 그래서 사람의 생각이 아니라 성경을 한가운데 둡니다.</p>
-        <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#4A3828">달은 스스로 빛을 내지 못하고 햇빛을 받아 비춥니다. 교회도 그렇습니다. 하나님이 성경으로 알려 주신 빛을 받아 세상을 비추는 교회이고 싶습니다.</p>
+        <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#4A3828">교회의 주인은 사람이 아니라 예수 그리스도입니다. 달빛교회는 목회자나 성도의 개인적인 생각보다 성경의 권위를 가장 앞세웁니다.</p>
+        <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#4A3828">스스로 빛을 내지 못하고 햇빛을 반사하는 달처럼, 오직 하나님이 성경에 계시하신 복음의 빛만을 세상에 비추는 교회를 지향합니다.</p>
       </div>
-      <div style="flex:1 1 220px;max-width:260px;margin:0 auto;background:#FCF1E2;border-radius:30px;overflow:hidden">
+      <div class="bear" style="flex:1 1 220px;max-width:260px;margin:0 auto;background:#FCF1E2;border-radius:30px;overflow:hidden">
         <img class="idle" src="assets/img/mongi-hello.jpg" alt="성경을 들고 손을 흔드는 곰 몽이" style="display:block;width:100%;aspect-ratio:392/560;object-fit:cover">
       </div>
     </div>
 
-    <div style="margin-top:72px">
+    <div class="sec" style="margin-top:72px">
       <div style="font-family:'Gaegu',sans-serif;font-weight:700;font-size:22px;color:#2F8A4B">☾ 성경을 따라 걷기 위한 지도</div>
       <h2 style="margin:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(34px,4vw,46px);line-height:1.2">웨스트민스터 표준문서</h2>
-      <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#4A3828;max-width:42em">성경은 두꺼운 책이라 읽는 사람마다 다르게 이해하기 쉽습니다. 380여 년 전 영국 웨스트민스터에 모인 목사와 신학자들은 여러 해 동안 성경을 함께 읽고, 그 가르침을 정리했습니다. 이것이 ‘웨스트민스터 표준문서’이고, 지금도 전 세계 장로교회가 기준으로 삼고 있습니다.</p>
-      <div style="margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
-        <div style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
-          <div style="display:inline-block;background:#FFE7A3;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#7A5A12">무엇을 믿는가</div>
-          <h3 style="margin:10px 0 0;font-size:22px;font-weight:900;line-height:1.35">신앙고백서</h3>
-          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">우리가 믿는 내용을 차례대로 정리한 고백입니다. 달빛교회는 이 고백 전체에 동의하고, 삶에서 실천하려고 애씁니다.</p>
-        </div>
-        <div style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
-          <div style="display:inline-block;background:#D5EFC9;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#2C6E3A">어떻게 배우는가</div>
-          <h3 style="margin:10px 0 0;font-size:22px;font-weight:900;line-height:1.35">대·소요리문답</h3>
-          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">“사람의 가장 큰 목적은 무엇입니까?” 같은 물음과 답으로 신앙을 배우는 책입니다. 이 문답을 가르치고 설교합니다.</p>
+      <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#4A3828;max-width:42em">방대한 성경 말씀을 개인의 주관대로 해석하면 신앙이 흔들리기 쉽습니다. 17세기 중엽 영국 웨스트민스터에 모인 경건한 목회자와 신학자들은 수년간 성경 전체의 가르침을 깊이 연구하여 체계적으로 정리했습니다. 이 결실인 ‘웨스트민스터 표준문서’는 오늘날까지 정통 장로교회가 성경을 해석하고 지키는 가장 든든한 신앙의 표준입니다.</p>
+      <div class="folds" style="align-items:start;margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
+        <details class="fold" style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
+          <summary><span style="display:inline-block;background:#FFE7A3;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#7A5A12">우리가 믿는 진리의 체계</span><h3 style="margin:10px 0 0;font-size:21px;font-weight:900;line-height:1.4">신앙고백서</h3></summary>
+          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">성경이 가르치는 핵심 진리를 서른세 개의 장으로 명료하게 정리한 고백입니다. 달빛교회는 이 고백의 일부만 취사선택하지 않고 전체를 온전히 받아들이며, 우리의 믿음과 삶이 이 진리 위에 서기를 힘씁니다.</p>
+        </details>
+        <details class="fold" style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
+          <summary><span style="display:inline-block;background:#D5EFC9;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#2C6E3A">묻고 답하며 배우는 교리</span><h3 style="margin:10px 0 0;font-size:21px;font-weight:900;line-height:1.4">대·소요리문답</h3></summary>
+          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">“인간 최고의 주된 목적은 무엇입니까?”와 같은 질문과 답변을 통해 기독교 신앙의 기초부터 깊은 교리까지 차근차근 배우는 교리서입니다. 주일 설교와 성경 공부를 통해 이 문답을 함께 읽고 가르칩니다.</p>
           <a href="https://wlcmoonlight.vercel.app/" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:6px;padding:10px 0;font-weight:700;font-size:15px;color:#1F5FA8">대요리문답 공부 앱 열기 →</a>
-        </div>
-        <div style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
-          <div style="display:inline-block;background:#D3E6FA;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#1F4F86">어떻게 예배하는가</div>
-          <h3 style="margin:10px 0 0;font-size:22px;font-weight:900;line-height:1.35">예배모범</h3>
-          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">사람의 취향이 아니라 성경이 보여 주는 대로 예배하도록 돕는 안내서입니다. 달빛교회의 예배 순서는 이것을 따릅니다.</p>
-        </div>
-        <div style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
-          <div style="display:inline-block;background:#FBD9E2;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#8A2F4A">어떻게 교회를 세우는가</div>
-          <h3 style="margin:10px 0 0;font-size:22px;font-weight:900;line-height:1.35">교회정치</h3>
-          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">교회를 질서 있게 돌보는 방법을 담았습니다. 서로를 사랑으로 바로잡아 주는 일(권징)도 여기에 들어 있습니다.</p>
-        </div>
+        </details>
+        <details class="fold" style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
+          <summary><span style="display:inline-block;background:#D3E6FA;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#1F4F86">성경이 명한 대로 드리는 예배</span><h3 style="margin:10px 0 0;font-size:21px;font-weight:900;line-height:1.4">예배모범</h3></summary>
+          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">예배자의 취향이나 시대의 유행을 따르지 않고, 오직 성경이 보여주는 원리대로 하나님을 예배하도록 안내하는 지침서입니다. 달빛교회의 모든 예배 순서는 이 예배모범의 정신을 따릅니다.</p>
+        </details>
+        <details class="fold" style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
+          <summary><span style="display:inline-block;background:#FBD9E2;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#8A2F4A">질서와 사랑으로 세우는 교회</span><h3 style="margin:10px 0 0;font-size:21px;font-weight:900;line-height:1.4">교회정치</h3></summary>
+          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">교회를 직분과 질서에 따라 바르게 치리하고 돌보는 원리를 담고 있습니다. 성도가 죄에서 돌이켜 거룩함을 회복하도록 사랑으로 권면하고 바로잡는 ‘권징’의 원리 역시 여기에 포함됩니다.</p>
+        </details>
       </div>
     </div>
 
-    <div style="margin-top:72px">
+    <div class="sec" style="margin-top:72px">
       <div style="font-family:'Gaegu',sans-serif;font-weight:700;font-size:22px;color:#2F8A4B">☾ 조금 더 알고 싶다면</div>
       <h2 style="margin:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(34px,4vw,46px);line-height:1.2">달빛교회는 이런 교회입니다</h2>
-      <div style="margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px">
-        <div style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
-          <h3 style="margin:0;font-size:21px;font-weight:900;line-height:1.4">성경이 말하는 만큼만</h3>
-          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">500년 전 종교개혁이 되찾은 ‘오직 성경’의 전통을 이어 갑니다. 성경이 명하지 않은 것은 예배에 더하지 않습니다. 그래서 사순절이나 대강절처럼 성경에 없는 절기는 지키지 않습니다.</p>
-          <p style="margin:10px 0 0;font-size:14px;color:#6B5340">이런 신앙을 ‘개혁주의’라고 부릅니다.</p>
-        </div>
-        <div style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
-          <h3 style="margin:0;font-size:21px;font-weight:900;line-height:1.4">혼자 서지 않는 교회</h3>
-          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">교회는 저마다 따로 서는 것이 아니라, 서로 살피고 돕도록 이어져 있다고 믿습니다. 한 사람의 뜻이 아니라 성경이 정한 질서에 따라 교회를 돌봅니다.</p>
-          <p style="margin:10px 0 0;font-size:14px;color:#6B5340">이것이 ‘장로교회’가 오랫동안 지켜 온 방식입니다.</p>
-        </div>
-        <div style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
-          <h3 style="margin:0;font-size:21px;font-weight:900;line-height:1.4">삶 전체가 하나님의 것</h3>
-          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">예배당 안에서만이 아니라, 이 땅의 모든 영역이 하나님의 다스림 아래 있다고 믿습니다. 성경이라는 안경으로 세상을 바르게 보고, 그 믿음대로 살고자 합니다.</p>
-        </div>
+      <div class="folds" style="align-items:start;margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px">
+        <details class="fold" style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
+          <summary><span style="display:inline-block;background:#FFE7A3;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#7A5A12">예배의 규정적 원리</span><h3 style="margin:10px 0 0;font-size:21px;font-weight:900;line-height:1.4">성경이 명한 것만 예배에 담습니다</h3></summary>
+          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">16세기 종교개혁자들이 목숨을 걸고 되찾은 ‘오직 성경’의 원리를 예배 현장에서 엄밀하게 지킵니다. 성경이 명하지 않은 인간적인 형식이나 전통은 예배에 더하지 않습니다. 사순절이나 대강절처럼 성경적 근거가 없는 교회 절기를 지키지 않고 매 주일 온전한 주일 성수에 집중하는 이유도 여기에 있습니다. 하나님이 기뻐하시는 방식대로만 예배하려는 이 순전한 태도가 바로 ‘개혁주의’ 신앙입니다.</p>
+        </details>
+        <details class="fold" style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
+          <summary><span style="display:inline-block;background:#D5EFC9;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#2C6E3A">장로교의 교회론</span><h3 style="margin:10px 0 0;font-size:21px;font-weight:900;line-height:1.4">성경의 질서 아래 함께 연결된 교회입니다</h3></summary>
+          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">개교회는 홀로 고립된 섬이 아니라 그리스도 안에서 서로 돌아보고 책임을 나누는 공교회의 지체입니다. 한 목회자의 독단이나 다수결의 분위기가 아니라, 성경이 정한 직분과 당회·노회의 질서에 따라 교회를 바르게 세워 갑니다. 이것이 오랜 역사 속에서 검증된 ‘장로교회’의 건강한 전통입니다.</p>
+        </details>
+        <details class="fold" style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
+          <summary><span style="display:inline-block;background:#D3E6FA;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#1F4F86">개혁주의 세계관</span><h3 style="margin:10px 0 0;font-size:21px;font-weight:900;line-height:1.4">예배당을 넘어 삶의 모든 자리에서 하나님을 섬깁니다</h3></summary>
+          <p style="margin:8px 0 0;font-size:16px;line-height:1.8;color:#5A4532">신앙은 주일 예배당 안에만 갇혀 있지 않습니다. 가정과 일터, 학업과 이웃과의 관계 등 우리가 발 딛고 사는 모든 영역이 하나님의 주권 아래 있습니다. 성경의 진리로 시대를 분별하고, 평일의 일상 속에서도 그리스도인답게 정직하고 성실하게 살아가기를 힘씁니다.</p>
+        </details>
       </div>
     </div>
 
-    <div style="margin-top:72px;background:#22428F;border-radius:36px;padding:clamp(28px,5vw,56px);color:#FFFFFF;display:flex;flex-wrap:wrap;align-items:center;gap:24px 48px">
+    <div class="sec" style="margin-top:72px;background:#22428F;border-radius:36px;padding:clamp(28px,5vw,56px);color:#FFFFFF;display:flex;flex-wrap:wrap;align-items:center;gap:24px 48px">
       <div style="flex:999 1 420px;min-width:0">
         <div style="font-family:'Gaegu',sans-serif;font-weight:700;font-size:22px;color:#FFE08A">☾ 우리의 소망</div>
         <h2 style="margin:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(34px,4vw,46px);line-height:1.2;color:#FFFFFF">달빛이 햇빛 같아지는 날</h2>
-        <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#E8EEFB">눈에 보이는 달빛교회는 작고 부족합니다. 그러나 교회는 크기나 겉모습으로 서지 않습니다. 머리이신 그리스도께서 자기 백성을 부르시고 지키시기에 섭니다. 그 백성 전체는 하나님만 온전히 아시기에 ‘보이지 않는 교회’라고 부릅니다. 달빛교회도 그 한 교회에 속한 작은 모임으로, 그리스도의 교회답게 하루를 살아갑니다.</p>
-        <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#E8EEFB">달빛이 햇빛 같아지는 날을 소망하며, 지금도 우리의 위로가 되시는 예수 그리스도만 이 교회를 다스리시기를 원합니다.</p>
+        <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#E8EEFB">이 땅에 세워진 달빛교회는 외형적으로 작고 연약해 보일 수 있습니다. 그러나 참된 교회는 건물의 크기나 사람의 숫자로 유지되지 않습니다. 교회의 머리 되신 예수 그리스도께서 친히 자기 백성을 말씀으로 부르시고 끝까지 지키시기 때문에 섭니다. 시대와 장소를 넘어 주님께서 택하신 모든 성도의 모임인 ‘보이지 않는 보편 교회’의 한 지체로서, 우리는 오늘도 말씀의 빛을 따라 묵묵히 걸어갑니다.</p>
         <p style="margin:24px 0 0;padding-left:18px;border-left:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:23px;line-height:1.6;color:#FFE08A">“여호와께서 자기 백성의 상처를 싸매시며 그들의 맞은 자리를 고치시는 날에는 달빛은 햇빛 같겠고 햇빛은 일곱 배가 되어 일곱 날의 빛과 같으리라”</p>
         <p style="margin:6px 0 0;padding-left:18px;font-size:15px;color:#C9D6F5">이사야 30장 26절</p>
       </div>
-      <svg aria-hidden="true" class="idle idle2" viewBox="0 0 200 200" style="flex:1 1 150px;max-width:190px;margin:0 auto"><circle cx="100" cy="100" r="84" fill="#FFD84A"/><circle cx="132" cy="82" r="72" fill="#22428F"/><path d="M150 132 L154 148 L170 152 L154 156 L150 172 L146 156 L130 152 L146 148 Z" fill="#FFF3B0"/></svg>
+      <svg aria-hidden="true" class="idle idle2 moon" viewBox="0 0 200 200" style="flex:1 1 150px;max-width:190px;margin:0 auto"><circle cx="100" cy="100" r="84" fill="#FFD84A"/><circle cx="132" cy="82" r="72" fill="#22428F"/><path d="M150 132 L154 148 L170 152 L154 156 L150 172 L146 156 L130 152 L146 148 Z" fill="#FFF3B0"/></svg>
     </div>
 
     <div style="margin:64px auto 0;max-width:38em;text-align:center">
-      <p style="margin:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(26px,3vw,34px);line-height:1.45">진리 안에서 엄밀하게,<br>성도 간에는 따뜻하게 함께 걷겠습니다.</p>
+      <p style="margin:0;font-size:17px;line-height:1.9;color:#4A3828">주님께서 다시 오셔서 모든 상처를 싸매시고 달빛이 햇빛처럼 온전해지는 그날을 소망합니다.</p>
+      <p style="margin:14px 0 0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(23px,2.6vw,29px);line-height:1.5">달빛교회는 하나님의 진리 앞에서는 타협 없이 엄밀하게 서고, 서로를 대할 때는 그리스도의 사랑으로 따뜻하게 품으며 함께 걷겠습니다.</p>
       <a class="btn" href="worship.html" style="display:inline-flex;align-items:center;gap:8px;min-height:52px;margin-top:24px;padding:0 30px;border-radius:999px;background:#1F5FA8;color:#FFFFFF;text-decoration:none;font-weight:700;font-size:17px">예배안내·오시는 길 <span aria-hidden="true">→</span></a>
       <p style="margin:36px 0 56px;font-size:14px;color:#6B5340">대한예수교장로회 달빛교회 · 대표자 김무성</p>
     </div>
@@ -169,5 +177,12 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
   </div>
 </div>
 
+<script>
+// 교회소개 카드: 컴퓨터에서는 늘 펼쳐 두고, 휴대폰에서는 제목을 눌러 펼친다
+(function(){var mq=window.matchMedia('(max-width:600px)');var f=document.querySelectorAll('.fold');
+function set(){f.forEach(function(d){d.open=!mq.matches;});}
+set();mq.addEventListener('change',set);
+f.forEach(function(d){d.querySelector('summary').addEventListener('click',function(e){if(!mq.matches)e.preventDefault();});});})();
+</script>
 </body>
 </html>
