@@ -121,6 +121,16 @@
       });
       box.appendChild(b);
     });
+    // 휴대폰에서는 4개만 먼저 보이고, 단추를 누르면 나머지가 나온다 (모양은 sermon.html 의 CSS)
+    var more = document.getElementById('shorts-more');
+    if (more && box.children.length > 4) {
+      box.classList.add('folded');
+      more.hidden = false;
+      more.addEventListener('click', function () {
+        box.classList.remove('folded');
+        more.hidden = true;
+      });
+    }
   }
 
   var recent = document.getElementById('sermon-recent');
