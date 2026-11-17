@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>달빛교회</title>
+    <link>https://www.lightofmoon.org/</link>
+    <description>서울 관악구 봉천역 근처에서 예배하는 대한예수교장로회 달빛교회입니다. 주일 예배 오전 11시 30분.</description>
+    <language>ko</language>
+    <lastBuildDate>Tue, 17 Nov 2026 09:00:00 +0900</lastBuildDate>
+    <item>
+      <title>달빛교회 | 대한예수교장로회 · 서울 관악구 봉천역</title>
+      <link>https://www.lightofmoon.org/</link>
+      <guid>https://www.lightofmoon.org/</guid>
+      <description>달빛교회는 서울 관악구 봉천역 근처에서 예배하는 대한예수교장로회 교회입니다. 주일 예배 오전 11시 30분. 성경과 웨스트민스터 표준문서를 따라 걷습니다.</description>
+      <pubDate>Tue, 17 Nov 2026 09:00:00 +0900</pubDate>
+    </item>
+    <item>
+      <title>교회소개 | 달빛교회</title>
+      <link>https://www.lightofmoon.org/about.html</link>
+      <guid>https://www.lightofmoon.org/about.html</guid>
+      <description>달빛교회는 성경의 가르침을 따라 바르게 믿고 예배하는 개혁교회입니다. 웨스트민스터 신앙고백서와 대·소요리문답, 예배모범, 교회정치를 신앙의 표준으로 삼는 장로교회입니다.</description>
+      <pubDate>Tue, 17 Nov 2026 09:00:00 +0900</pubDate>
+    </item>
+    <item>
+      <title>예배안내·오시는 길 | 달빛교회</title>
+      <link>https://www.lightofmoon.org/worship.html</link>
+      <guid>https://www.lightofmoon.org/worship.html</guid>
+      <description>달빛교회 주일 예배는 오전 11시 30분입니다. 서울 관악구 은천로 28 가동 2층 156호(클라운지), 2호선 봉천역 4번 출구에서 걸어서 8분.</description>
+      <pubDate>Tue, 17 Nov 2026 09:00:00 +0900</pubDate>
+    </item>
+    <item>
+      <title>새가족 안내·자주 묻는 질문 | 달빛교회</title>
+      <link>https://www.lightofmoon.org/newcomer.html</link>
+      <guid>https://www.lightofmoon.org/newcomer.html</guid>
+      <description>달빛교회에 처음 방문하시는 분들이 자주 묻는 내용을 정리했습니다. 주차, 예배 시간, 식사, 헌금, 등록 안내.</description>
+      <pubDate>Tue, 17 Nov 2026 09:00:00 +0900</pubDate>
+    </item>
+    <item>
+      <title>말씀과 설교 | 달빛교회</title>
+      <link>https://www.lightofmoon.org/sermon.html</link>
+      <guid>https://www.lightofmoon.org/sermon.html</guid>
+      <description>달빛교회 주일 설교 영상과 1분 말씀, 베드로전서 강해 안내, 청소년 설교문을 한곳에서 볼 수 있습니다.</description>
+      <pubDate>Tue, 17 Nov 2026 09:00:00 +0900</pubDate>
+    </item>
+    <item>
+      <title>소식과 나눔 | 달빛교회</title>
+      <link>https://www.lightofmoon.org/news.html</link>
+      <guid>https://www.lightofmoon.org/news.html</guid>
+      <description>달빛교회 교우들이 예배와 말씀을 듣고 나누는 후기 게시판입니다. 누구나 가입 없이 글을 남길 수 있습니다.</description>
+      <pubDate>Tue, 17 Nov 2026 09:00:00 +0900</pubDate>
+    </item>
+  </channel>
+</rss>
