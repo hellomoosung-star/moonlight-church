@@ -487,6 +487,55 @@ function openViewer(src, alt, opener) {
   if (window.matchMedia('(max-width:600px)').matches) setBig(true, 0, 0);
 }
 
+// 글로 넣은 주보(data/bulletins.json 의 text)를 휴대폰에서 읽기 좋게 그린다
+function bulletinText(b) {
+  const t = b.text;
+  const wrap = el('div', { class: 'bt' });
+  const sec = (title, ref, kids) => el('section', { class: 'bt-sec' }, [
+    el('div', { class: 'bt-head' }, [el('h3', { class: 'bt-title', text: title }), ref ? el('span', { class: 'bt-ref', text: ref }) : null])
+  ].concat(kids));
+  const sermonCard = () => el('div', { class: 'bt-sermon' }, [
+    t.sermon.series ? el('span', { class: 'bt-tag', text: t.sermon.series }) : null,
+    el('div', { class: 'bt-sermon-title', text: t.sermon.title }),
+    el('div', { class: 'bt-sermon-meta', text: '본문 · ' + t.sermon.passage }),
+    el('div', { class: 'bt-sermon-meta', text: '설교 · ' + t.sermon.preacher })
+  ]);
+  wrap.appendChild(el('div', { class: 'bt-top' }, [
+    el('div', { class: 'bt-date', text: fmtDate(b.date) + ' 주일' }),
+    el('div', { class: 'bt-issue', text: [t.issue, '오전 11:30'].filter(Boolean).join(' · ') })
+  ]));
+  if (t.verse) wrap.appendChild(el('p', { class: 'bt-verse' }, [document.createTextNode(t.verse.text + ' '), el('span', { class: 'bt-verse-ref', text: t.verse.ref })]));
+  if (t.sermon) wrap.appendChild(sec('오늘의 설교', '', [sermonCard()]));
+  if (t.order) {
+    const list = el('ol', { class: 'bt-order' });
+    t.order.forEach((o, n) => list.appendChild(el('li', { class: o.main ? 'main' : null }, [
+      el('span', { class: 'bt-no', text: String(n + 1).padStart(2, '0') }),
+      el('span', { class: 'bt-up', text: o.stand ? '↑' : '', 'aria-hidden': 'true' }),
+      el('span', { class: 'bt-name', text: o.name }),
+      o.stand ? el('span', { class: 'bt-sr', text: '(일어섭니다)' }) : null,
+      el('span', { class: 'bt-note', text: o.note || '' })
+    ])));
+    wrap.appendChild(sec('예배 순서', t.leader ? '예배 인도 · ' + t.leader : '', [list, el('p', { class: 'bt-foot', text: '↑ 표시된 순서에는 함께 일어섭니다' })]));
+  }
+  (t.sections || []).forEach((s) => {
+    const kids = [];
+    if (s.sub) kids.push(el('p', { class: 'bt-sub', text: s.sub }));
+    if (s.quote) kids.push(el('blockquote', { class: 'bt-quote', text: s.quote }));
+    if (s.sermon && t.sermon) kids.push(sermonCard());
+    (s.stanzas || []).forEach((lines, n) => kids.push(el('div', { class: 'bt-stanza' }, [
+      el('span', { class: 'bt-no', text: String(n + 1) }),
+      el('div', {}, lines.map((x) => el('div', { text: x })))
+    ])));
+    (s.readings || []).forEach((r) => {
+      kids.push(el('div', { class: 'bt-read-ref' }, [document.createTextNode(r.ref + ' '), r.version ? el('span', { class: 'bt-ref', text: r.version }) : null]));
+      kids.push(el('div', { class: 'bt-quote' }, r.verses.map((v) => el('p', { class: 'bt-v' }, [el('span', { class: 'bt-vn', text: String(v[0]) }), document.createTextNode(' ' + v[1])]))));
+    });
+    (s.news || []).forEach((x) => kids.push(el('div', { class: 'bt-news' }, [el('div', { class: 'bt-news-title', text: x.title }), el('div', { class: 'bt-news-body', text: x.body })])));
+    wrap.appendChild(sec(s.title, s.ref, kids));
+  });
+  return wrap;
+}
+
 function setupBulletins() {
   const box = document.getElementById('bulletin-list');
   if (!box) return;
@@ -510,6 +559,26 @@ function setupBulletins() {
     holder.appendChild(el('p', { class: 'b-empty', text: '주보를 불러오는 중입니다…' }));
     if (b.pages) { // 저장소에 파일로 들어 있는 주보 (data/bulletins.json)
       holder.textContent = '';
+      if (b.text) { // 글 주보가 있으면 글을 먼저 보여 주고, 인쇄용 그림은 단추를 눌러 펼친다
+        holder.classList.add('has-text');
+        holder.appendChild(bulletinText(b));
+        const pics = el('div', { class: 'bt-pics' });
+        pics.hidden = true;
+        const btn = el('button', { class: 'bt-print', type: 'button', 'aria-expanded': 'false', text: '인쇄용 주보(A4) 보기 ↓' });
+        btn.addEventListener('click', () => {
+          const open = pics.hidden;
+          pics.hidden = !open;
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+          btn.textContent = open ? '인쇄용 주보 접기 ↑' : '인쇄용 주보(A4) 보기 ↓';
+          if (open && !pics.firstChild) {
+            pics.appendChild(el('p', { class: 'bl-hint', text: '주보 그림을 누르면 화면 가득 크게 볼 수 있습니다.' }));
+            b.pages.forEach((src, n) => pics.appendChild(el('img', { class: 'bl-page', tabindex: '0', role: 'button', title: '누르면 크게 봅니다', src, alt: fmtDate(b.date) + ' 주보 ' + (n + 1) + '쪽' })));
+          }
+        });
+        holder.appendChild(el('div', { class: 'bt-print-wrap' }, [btn]));
+        holder.appendChild(pics);
+        return;
+      }
       b.pages.forEach((src, n) => holder.appendChild(el('img', { class: 'bl-page', tabindex: '0', role: 'button', title: '누르면 크게 봅니다', src, alt: fmtDate(b.date) + ' 주보 ' + (n + 1) + '쪽' })));
       return;
     }
@@ -546,7 +615,7 @@ function setupBulletins() {
       const row = el('div', { class: 'yrow' }, [head, holder]);
       if (open) {
         showPages(b, holder).then(() => {
-          if (holder.querySelector('.bl-page')) holder.insertBefore(el('p', { class: 'bl-hint', text: '주보 그림을 누르면 화면 가득 크게 볼 수 있습니다.' }), holder.firstChild);
+          if (!b.text && holder.querySelector('.bl-page')) holder.insertBefore(el('p', { class: 'bl-hint', text: '주보 그림을 누르면 화면 가득 크게 볼 수 있습니다.' }), holder.firstChild);
           if (isAdmin() && !b.pages) {
             holder.appendChild(el('div', { style: 'text-align:center;margin-top:12px' }, [deleteButton(async () => {
               await Promise.all(Array.from({ length: b.count }, (_, n) => deleteDoc(doc(db, 'bulletinPages', b.id + '_' + n))));
