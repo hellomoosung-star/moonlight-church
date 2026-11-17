@@ -496,8 +496,8 @@ function bulletinText(b, t) {
   const sermonCard = () => el('div', { class: 'bt-sermon' }, [
     t.sermon.series ? el('span', { class: 'bt-tag', text: t.sermon.series }) : null,
     el('div', { class: 'bt-sermon-title', text: t.sermon.title }),
-    el('div', { class: 'bt-sermon-meta', text: '본문 · ' + t.sermon.passage }),
-    el('div', { class: 'bt-sermon-meta', text: '설교 · ' + t.sermon.preacher })
+    t.sermon.passage ? el('div', { class: 'bt-sermon-meta', text: '본문 · ' + t.sermon.passage }) : null,
+    t.sermon.preacher ? el('div', { class: 'bt-sermon-meta', text: '설교 · ' + t.sermon.preacher }) : null
   ]);
   wrap.appendChild(el('div', { class: 'bt-top' }, [
     el('div', { class: 'bt-date', text: fmtDate(b.date) + ' 주일' }),
@@ -514,7 +514,7 @@ function bulletinText(b, t) {
       o.stand ? el('span', { class: 'bt-sr', text: '(일어섭니다)' }) : null,
       el('span', { class: 'bt-note', text: o.note || '' })
     ])));
-    wrap.appendChild(sec('예배 순서', t.leader ? '예배 인도 · ' + t.leader : '', [list, el('p', { class: 'bt-foot', text: '↑ 표시된 순서에는 함께 일어섭니다' })]));
+    wrap.appendChild(sec('예배 순서', t.leader ? '예배 인도 · ' + t.leader : '', [list, t.order.some((o) => o.stand) ? el('p', { class: 'bt-foot', text: '↑ 표시된 순서에는 함께 일어섭니다' }) : null]));
   }
   (t.sections || []).forEach((s) => {
     const kids = [];

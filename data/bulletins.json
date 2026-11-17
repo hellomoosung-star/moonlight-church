@@ -14,7 +14,8 @@
     "pages": [
       "bulletins/2026-11-08-1.png",
       "bulletins/2026-11-08-2.png"
-    ]
+    ],
+    "text": "data/bulletin-text/2026-11-08.json"
   },
   {
     "date": "2026-11-01",
@@ -22,7 +23,8 @@
     "pages": [
       "bulletins/2026-11-01-1.png",
       "bulletins/2026-11-01-2.png"
-    ]
+    ],
+    "text": "data/bulletin-text/2026-11-01.json"
   },
   {
     "date": "2026-10-25",
@@ -30,7 +32,8 @@
     "pages": [
       "bulletins/2026-10-25-1.png",
       "bulletins/2026-10-25-2.png"
-    ]
+    ],
+    "text": "data/bulletin-text/2026-10-25.json"
   },
   {
     "date": "2026-10-18",
@@ -38,7 +41,8 @@
     "pages": [
       "bulletins/2026-10-18-1.png",
       "bulletins/2026-10-18-2.png"
-    ]
+    ],
+    "text": "data/bulletin-text/2026-10-18.json"
   },
   {
     "date": "2026-09-27",
@@ -46,7 +50,8 @@
     "pages": [
       "bulletins/2026-09-27-1.png",
       "bulletins/2026-09-27-2.png"
-    ]
+    ],
+    "text": "data/bulletin-text/2026-09-27.json"
   },
   {
     "date": "2026-09-20",
@@ -55,7 +60,8 @@
       "bulletins/2026-09-20-1.png",
       "bulletins/2026-09-20-2.png",
       "bulletins/2026-09-20-3.png"
-    ]
+    ],
+    "text": "data/bulletin-text/2026-09-20.json"
   },
   {
     "date": "2026-09-13",
@@ -64,7 +70,8 @@
       "bulletins/2026-09-13-1.png",
       "bulletins/2026-09-13-2.png",
       "bulletins/2026-09-13-3.png"
-    ]
+    ],
+    "text": "data/bulletin-text/2026-09-13.json"
   },
   {
     "date": "2026-09-06",
@@ -73,7 +80,8 @@
       "bulletins/2026-09-06-1.png",
       "bulletins/2026-09-06-2.png",
       "bulletins/2026-09-06-3.png"
-    ]
+    ],
+    "text": "data/bulletin-text/2026-09-06.json"
   },
   {
     "date": "2026-08-30",
@@ -82,7 +90,8 @@
       "bulletins/2026-08-30-1.png",
       "bulletins/2026-08-30-2.png",
       "bulletins/2026-08-30-3.png"
-    ]
+    ],
+    "text": "data/bulletin-text/2026-08-30.json"
   },
   {
     "date": "2026-08-16",
@@ -90,6 +99,7 @@
     "pages": [
       "bulletins/2026-08-16-1.png",
       "bulletins/2026-08-16-2.png"
-    ]
+    ],
+    "text": "data/bulletin-text/2026-08-16.json"
   }
 ]
