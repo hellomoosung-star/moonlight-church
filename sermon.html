@@ -51,18 +51,15 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
 .vthumb img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
 .vdate{display:block;font-size:13px;font-weight:700;color:#6B5340}
 .vtitle{display:block;margin-top:4px;font-weight:900;font-size:17px;line-height:1.45}
-.shorts{margin-top:24px;display:grid;align-items:start;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}
+.shorts{margin-top:24px;display:grid;align-items:start;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
 .short{display:block;width:100%;padding:0;border:0;background:none;text-align:left;font-family:inherit;color:inherit;cursor:pointer}
 .short-frame{position:relative;display:block;border-radius:22px;overflow:hidden;background:#22428F;aspect-ratio:9/16}
 .short-frame img{display:block;width:100%;height:100%;object-fit:cover}
 .short-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .short-title{display:block;margin-top:10px;font-weight:700;font-size:15px;line-height:1.5}
-.shorts-more-wrap{display:none;margin-top:18px;text-align:center}
-.shorts-more{min-height:46px;padding:0 22px;border-radius:999px;border:2px solid #1F5FA8;background:#FFFFFF;color:#1F5FA8;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer}
 @media (max-width:600px){
 .shorts{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.shorts.folded .short:nth-child(n+5){display:none}
-.shorts-more-wrap{display:block}
+.shorts .short:nth-child(n+5){display:none}
 .short-frame{border-radius:18px}
 .short-title{font-size:14px;margin-top:8px}
 }
@@ -86,7 +83,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
 .nav-x{display:inline}
 @media (max-width:640px){.nav{flex-wrap:nowrap!important;gap:0!important;justify-content:space-between;width:calc(100% + 32px);margin:0 -16px;font-size:3.25vw!important}.nav a{padding:10px 1.2vw!important;white-space:nowrap}.nav-x{display:none}}
 </style>
-<link rel="stylesheet" href="assets/css/board.css?v=20261117c">
+<link rel="stylesheet" href="assets/css/board.css?v=20261117d">
 </head>
 <body>
 <div id="top" style="background:#FEF7E8">
@@ -236,7 +233,6 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
       <div style="font-family:'Gaegu',sans-serif;font-weight:700;font-size:22px;color:#2F8A4B">☾ 1분 말씀</div>
       <h2 style="margin:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(34px,4vw,46px);line-height:1.2">짧은 말씀</h2>
       <div id="sermon-shorts" class="shorts"></div>
-      <div class="shorts-more-wrap"><button id="shorts-more" class="shorts-more" type="button" hidden>짧은 말씀 더 보기 ↓</button></div>
     </div>
 
     <div style="height:64px"></div>
@@ -261,7 +257,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
     </div>
   </div>
 </div>
-<script src="assets/js/site.js?v=20261117c" defer></script>
-<script type="module" src="assets/js/board.js?v=20261117c"></script>
+<script src="assets/js/site.js?v=20261117d" defer></script>
+<script type="module" src="assets/js/board.js?v=20261117d"></script>
 </body>
 </html>

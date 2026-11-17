@@ -112,7 +112,7 @@
 
   function renderShorts(box, shorts) {
     box.textContent = '';
-    shorts.slice(0, 8).forEach(function (v) {
+    shorts.slice(0, 5).forEach(function (v) {
       var frame = el('span', { class: 'short-frame' }, [el('img', { src: thumb(v.id), alt: '', loading: 'lazy' }), playDot(48)]);
       var b = el('button', { class: 'short lift', type: 'button' }, [frame, el('span', { class: 'short-title', text: v.title })]);
       b.addEventListener('click', function () {
@@ -121,16 +121,6 @@
       });
       box.appendChild(b);
     });
-    // 휴대폰에서는 4개만 먼저 보이고, 단추를 누르면 나머지가 나온다 (모양은 sermon.html 의 CSS)
-    var more = document.getElementById('shorts-more');
-    if (more && box.children.length > 4) {
-      box.classList.add('folded');
-      more.hidden = false;
-      more.addEventListener('click', function () {
-        box.classList.remove('folded');
-        more.hidden = true;
-      });
-    }
   }
 
   var recent = document.getElementById('sermon-recent');
