@@ -184,7 +184,9 @@ function setupPosts() {
     saveTags(tags.concat([{ id: 't' + Date.now(), name, color }])).then(() => { tagAddForm.reset(); }, () => {});
   });
 
-  try { form.elements.name.value = localStorage.getItem('moon-name') || ''; } catch (e) { /* 저장소를 못 쓰는 브라우저 */ }
+  // 이름 칸은 늘 비워 둔다. 예전에 이 기기에 기억해 둔 이름도 지운다.
+  try { localStorage.removeItem('moon-name'); } catch (e) { /* 저장소를 못 쓰는 브라우저 */ }
+  form.elements.name.value = '';
 
   function bubble(p) {
     // 올라온 순서(오래된 글부터 0, 1, 2 …)로 좌우를 정한다. 새 글이 올라와도 예전 글의 자리는 그대로다.
@@ -364,7 +366,6 @@ function setupPosts() {
       shownPost.id = ref.id;
       shownPost.uid = auth.currentUser.uid;
       shownPost.pending = false;
-      try { localStorage.setItem('moon-name', name); } catch (e) { /* 무시 */ }
       status.textContent = '글을 올렸습니다. 고맙습니다.';
     } catch (e) {
       recent = recent.filter((x) => x !== shownPost);
