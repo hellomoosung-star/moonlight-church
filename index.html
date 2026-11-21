@@ -71,6 +71,7 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
 .scenes{grid-auto-flow:dense}
 .scenes-more{display:contents}
 .scenes-more[hidden]{display:none}
+.scenes:has(.scenes-more:not([hidden])){margin-top:32px}
 
 @media (max-width:860px){.scenes{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .scene img{transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
@@ -242,7 +243,8 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
       <h2 style="margin:4px 0 0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(40px,4.6vw,56px);line-height:1.15">달빛교회 풍경</h2>
       <p style="margin:10px 0 0;font-size:17px;line-height:1.7;color:#6B5340">주일마다 클라운지 서울 관악1호점을 빌려 예배합니다</p>
     </div>
-    <div class="scenes" style="margin-top:32px;display:grid;gap:18px">
+    <div class="scenes" style="display:grid;gap:18px">
+      <div id="scenes-more" class="scenes-more" hidden>
       <figure class="scene wide" style="margin:0">
         <img src="assets/img/scene-space1.jpg" alt="둥근 탁자와 의자, 벽걸이 화면이 있는 넓고 밝은 실내" loading="lazy" width="1400" height="875" style="display:block;width:100%;height:auto;aspect-ratio:1400/875;object-fit:cover;border-radius:24px;background:#F4EBD6">
         <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">따뜻하고 아늑한 예배 공간</figcaption>
@@ -251,7 +253,6 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
         <img src="assets/img/scene-gather.jpg" alt="주일 오전, 둥근 탁자에 둘러앉아 예배를 기다리는 사람들. 얼굴은 흐리게 처리했다" loading="lazy" width="1400" height="875" style="display:block;width:100%;height:auto;aspect-ratio:1400/875;object-fit:cover;border-radius:24px;background:#F4EBD6">
         <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">예배를 준비하는 주일 오전 풍경</figcaption>
       </figure>
-      <div id="scenes-more" class="scenes-more" hidden>
       <figure class="scene" style="margin:0">
         <img src="assets/img/scene-table.jpg" alt="여럿이 둘러앉는 긴 나무 탁자" loading="lazy" width="900" height="1125" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;background:#F4EBD6">
         <figcaption style="margin-top:8px;font-size:15px;font-weight:700;text-align:center;color:#5A4532">말씀을 나누는 긴 식탁과 테이블</figcaption>
@@ -282,7 +283,7 @@ a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px;border-radius:14px}
       </figure>
       </div>
     </div>
-    <div style="margin-top:22px;text-align:center"><button id="scenes-toggle" type="button" aria-expanded="false" aria-controls="scenes-more" data-more="사진 7장 더 보기 ↓" style="display:inline-flex;align-items:center;min-height:48px;padding:0 26px;border-radius:999px;border:2px solid #1F5FA8;background:#FFFFFF;color:#1F5FA8;font-family:inherit;font-weight:700;font-size:16px;cursor:pointer">사진 7장 더 보기 ↓</button></div>
+    <div style="margin-top:22px;text-align:center"><button id="scenes-toggle" type="button" aria-expanded="false" aria-controls="scenes-more" data-more="교회 사진 9장 보기 ↓" style="display:inline-flex;align-items:center;min-height:48px;padding:0 26px;border-radius:999px;border:2px solid #1F5FA8;background:#FFFFFF;color:#1F5FA8;font-family:inherit;font-weight:700;font-size:16px;cursor:pointer">교회 사진 9장 보기 ↓</button></div>
     <div style="margin-top:16px;text-align:center"><a href="worship.html" style="display:inline-flex;align-items:center;min-height:50px;padding:0 28px;border-radius:999px;background:#1F5FA8;color:#FFFFFF;text-decoration:none;font-weight:700;font-size:16px">오시는 길 보기 →</a></div>
   </div>
 
