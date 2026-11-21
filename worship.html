@@ -37,6 +37,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
 .idle2{animation-delay:-1.4s}
 .ways{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media (max-width:860px){.ways{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.map-btns{display:grid!important;grid-template-columns:1fr 1fr}.map-btns>*{padding:0 10px!important}
 @keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){.idle{animation:none}.lift,.btn{transition:none}.lift:hover,.btn:hover{transform:none}}
 .nav-x{display:inline}
@@ -82,10 +83,11 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
         <div style="display:flex;align-items:center;gap:8px;color:#1F5FA8;font-weight:700;font-size:15px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>예배 장소</div>
         <div style="margin-top:10px;font-size:21px;font-weight:900;line-height:1.4">클라운지 서울 관악1호점</div>
         <p style="margin:6px 0 0;font-size:16px;line-height:1.7;color:#4A3828">서울특별시 관악구 은천로 28<br>가동 2층 156호</p>
-        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
+        <div class="map-btns" style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
           <button class="btn" type="button" data-copy="서울특별시 관악구 은천로 28 가동 2층 156호" data-label="주소 복사" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;font-family:inherit;border:2px solid #1F5FA8;background:#FFFFFF;color:#1F5FA8">주소 복사</button>
           <a class="btn" href="https://naver.me/53990CAA" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;font-family:inherit;border:2px solid #1F5FA8;background:#1F5FA8;color:#FFFFFF">네이버 지도 열기</a>
           <a class="btn" href="https://maps.app.goo.gl/JFkEVLSevcvs3bcG9" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;font-family:inherit;border:2px solid #1F5FA8;background:#FFFFFF;color:#1F5FA8">구글 지도 열기</a>
+          <a class="btn" href="https://place.map.kakao.com/1396980392" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;font-family:inherit;border:2px solid #1F5FA8;background:#FFFFFF;color:#1F5FA8">카카오맵 열기</a>
         </div>
       </div>
       <a id="first" class="lift" href="newcomer.html" style="text-decoration:none;background:#FFF3B0;border-radius:30px;padding:22px 24px 0;box-shadow:0 8px 0 rgba(90,60,30,.08);display:flex;gap:6px;align-items:flex-end;overflow:hidden">
