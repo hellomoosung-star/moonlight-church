@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-22",
+    "title": "주일 예배 주보",
+    "pages": [
+      "bulletins/2026-11-22-1.png",
+      "bulletins/2026-11-22-2.png"
+    ],
+    "text": "data/bulletin-text/2026-11-22.json"
+  },
+  {
     "date": "2026-11-15",
     "title": "주일 예배 주보",
     "pages": [

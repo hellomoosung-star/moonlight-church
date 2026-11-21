@@ -520,6 +520,7 @@ function bulletinText(b, t) {
     const kids = [];
     if (s.sub) kids.push(el('p', { class: 'bt-sub', text: s.sub }));
     if (s.quote) kids.push(el('blockquote', { class: 'bt-quote', text: s.quote }));
+    if (s.verses) kids.push(el('div', { class: 'bt-quote' }, s.verses.map((v) => el('p', { class: 'bt-v' }, [el('span', { class: 'bt-vn', text: String(v[0]) }), document.createTextNode(' ' + v[1])]))));
     if (s.sermon && t.sermon) kids.push(sermonCard());
     (s.paras || []).forEach((x) => kids.push(el('p', { class: 'bt-para', text: x })));
     (s.qa || []).forEach((x) => kids.push(el('div', { class: 'bt-qa' }, [el('div', { class: 'bt-q', text: x.q }), el('div', { class: 'bt-a', text: x.a })])));

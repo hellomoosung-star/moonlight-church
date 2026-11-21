@@ -167,7 +167,7 @@ details.b-admin summary{cursor:pointer;font-weight:700;font-size:16px;color:#1F5
 .bt-news{padding:10px 0;border-bottom:1px solid #EFE6D2}
 .bt-news:last-child{border-bottom:0}
 .bt-news-title{font-weight:900;font-size:17px;line-height:1.5}
-.bt-news-body{margin-top:2px;font-size:16px;line-height:1.75;color:#4A3828}
+.bt-news-body{white-space:pre-line;margin-top:2px;font-size:16px;line-height:1.75;color:#4A3828}
 .bt-para{margin:0 0 10px;font-size:17px;line-height:1.85;color:#4A3828}
 .bt-qa{margin-top:14px}
 .bt-q{font-weight:900;font-size:17px;line-height:1.6}
