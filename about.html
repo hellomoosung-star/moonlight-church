@@ -37,14 +37,22 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
 .idle2{animation-delay:-1.4s}
 @keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){.idle{animation:none}.lift,.btn{transition:none}.lift:hover,.btn:hover{transform:none}}
-.fold summary{list-style:none;cursor:default}
+.fold summary{list-style:none;cursor:pointer;position:relative;padding-right:30px}
+.fold summary::after{content:"+";position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:24px;font-weight:700;color:#1F5FA8}
+.fold[open] summary::after{content:"−"}
+.fold summary:focus-visible{outline:3px solid #1F5FA8;outline-offset:4px;border-radius:12px}
+.fold[open]>p,.fold[open]>a{animation:rise .35s ease-out}
+.more-btn{display:inline-flex;align-items:center;min-height:44px;margin-top:14px;padding:0 20px;border-radius:999px;border:2px solid #1F5FA8;background:#FFFFFF;color:#1F5FA8;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer}
+.more-btn.dark{border-color:#FFE08A;background:transparent;color:#FFE08A}
+.more-btn:focus-visible{outline:3px solid #1F5FA8;outline-offset:3px}
+.more-btn.dark:focus-visible{outline-color:#FFE08A}
+.more-body:not([hidden]){animation:rise .4s ease-out}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.more-body:not([hidden]),.fold[open]>p,.fold[open]>a{animation:none}}
 .fold summary::-webkit-details-marker{display:none}
 .fold summary h3{display:block}
 @media (max-width:600px){
 .fold{padding:18px 20px 20px!important;border-radius:24px!important}
-.fold summary{cursor:pointer;position:relative;padding-right:30px}
-.fold summary::after{content:"+";position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:24px;font-weight:700;color:#1F5FA8}
-.fold[open] summary::after{content:"−"}
 .fold summary h3{font-size:19px!important;margin-top:8px!important}
 .folds{gap:12px!important}
 .sec{margin-top:52px!important}
@@ -87,8 +95,11 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
       <div style="flex:999 1 420px;min-width:0">
         <div style="font-family:'Gaegu',sans-serif;font-weight:700;font-size:22px;color:#2F8A4B">☾ 우리가 바라는 교회</div>
         <h2 style="margin:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(34px,4vw,46px);line-height:1.2">그리스도가 다스리시는 교회</h2>
+        <div id="more-1" class="more-body" hidden>
         <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#4A3828">교회의 주인은 사람이 아니라 예수 그리스도입니다. 달빛교회는 목회자나 성도의 개인적인 생각보다 성경의 권위를 가장 앞세웁니다.</p>
         <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#4A3828">스스로 빛을 내지 못하고 햇빛을 반사하는 달처럼, 오직 하나님이 성경에 계시하신 복음의 빛만을 세상에 비추는 교회를 지향합니다.</p>
+        </div>
+        <button class="more-btn" type="button" aria-expanded="false" aria-controls="more-1">더보기 ↓</button>
       </div>
       <div class="bear" style="flex:1 1 220px;max-width:260px;margin:0 auto;background:#FCF1E2;border-radius:30px;overflow:hidden">
         <img class="idle" src="assets/img/mongi-hello.jpg" alt="성경을 들고 손을 흔드는 곰 몽이" style="display:block;width:100%;aspect-ratio:392/560;object-fit:cover">
@@ -98,7 +109,10 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
     <div class="sec" style="margin-top:72px">
       <div style="font-family:'Gaegu',sans-serif;font-weight:700;font-size:22px;color:#2F8A4B">☾ 성경을 따라 걷기 위한 지도</div>
       <h2 style="margin:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(34px,4vw,46px);line-height:1.2">웨스트민스터 표준문서</h2>
+      <div id="more-2" class="more-body" hidden>
       <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#4A3828;max-width:42em">방대한 성경 말씀을 개인의 주관대로 해석하면 신앙이 흔들리기 쉽습니다. 17세기 중엽 영국 웨스트민스터에 모인 경건한 목회자와 신학자들은 수년간 성경 전체의 가르침을 깊이 연구하여 체계적으로 정리했습니다. 이 결실인 ‘웨스트민스터 표준문서’는 오늘날까지 정통 장로교회가 성경을 해석하고 지키는 가장 든든한 신앙의 표준입니다.</p>
+      </div>
+      <button class="more-btn" type="button" aria-expanded="false" aria-controls="more-2">더보기 ↓</button>
       <div class="folds" style="align-items:start;margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
         <details class="fold" style="background:#FFFDF6;border-radius:30px;padding:26px 26px 28px;box-shadow:0 8px 0 rgba(90,60,30,.08);border:2px solid #F1E4C8">
           <summary><span style="display:inline-block;background:#FFE7A3;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:700;color:#7A5A12">우리가 믿는 진리의 체계</span><h3 style="margin:10px 0 0;font-size:21px;font-weight:900;line-height:1.4">신앙고백서</h3></summary>
@@ -143,9 +157,12 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
       <div style="flex:999 1 420px;min-width:0">
         <div style="font-family:'Gaegu',sans-serif;font-weight:700;font-size:22px;color:#FFE08A">☾ 우리의 소망</div>
         <h2 style="margin:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:clamp(34px,4vw,46px);line-height:1.2;color:#FFFFFF">달빛이 햇빛 같아지는 날</h2>
+        <div id="more-3" class="more-body" hidden>
         <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#E8EEFB">이 땅에 세워진 달빛교회는 외형적으로 작고 연약해 보일 수 있습니다. 그러나 참된 교회는 건물의 크기나 사람의 숫자로 유지되지 않습니다. 교회의 머리 되신 예수 그리스도께서 친히 자기 백성을 말씀으로 부르시고 끝까지 지키시기 때문에 섭니다. 시대와 장소를 넘어 주님께서 택하신 모든 성도의 모임인 ‘보이지 않는 보편 교회’의 한 지체로서, 우리는 오늘도 말씀의 빛을 따라 묵묵히 걸어갑니다.</p>
         <p style="margin:24px 0 0;padding-left:18px;border-left:0;font-family:'Gaegu',sans-serif;font-weight:700;font-size:23px;line-height:1.6;color:#FFE08A">“여호와께서 자기 백성의 상처를 싸매시며 그들의 맞은 자리를 고치시는 날에는 달빛은 햇빛 같겠고 햇빛은 일곱 배가 되어 일곱 날의 빛과 같으리라”</p>
         <p style="margin:6px 0 0;padding-left:18px;font-size:15px;color:#C9D6F5">이사야 30장 26절</p>
+        </div>
+        <button class="more-btn dark" type="button" aria-expanded="false" aria-controls="more-3">더보기 ↓</button>
       </div>
       <svg aria-hidden="true" class="idle idle2 moon" viewBox="0 0 200 200" style="flex:1 1 150px;max-width:190px;margin:0 auto"><circle cx="100" cy="100" r="84" fill="#FFD84A"/><circle cx="132" cy="82" r="72" fill="#22428F"/><path d="M150 132 L154 148 L170 152 L154 156 L150 172 L146 156 L130 152 L146 148 Z" fill="#FFF3B0"/></svg>
     </div>
@@ -180,11 +197,13 @@ a:focus-visible,button:focus-visible{outline:3px solid #1F5FA8;outline-offset:3p
 </div>
 
 <script>
-// 교회소개 카드: 컴퓨터에서는 늘 펼쳐 두고, 휴대폰에서는 제목을 눌러 펼친다
-(function(){var mq=window.matchMedia('(max-width:600px)');var f=document.querySelectorAll('.fold');
-function set(){f.forEach(function(d){d.open=!mq.matches;});}
-set();mq.addEventListener('change',set);
-f.forEach(function(d){d.querySelector('summary').addEventListener('click',function(e){if(!mq.matches)e.preventDefault();});});})();
+// 교회소개: 카드는 제목만 보이고 눌러서 펼친다. "더보기"를 누르면 그 칸의 글이 나온다.
+(function(){
+  document.querySelectorAll('.more-btn').forEach(function(b){
+    var t=document.getElementById(b.getAttribute('aria-controls'));
+    b.addEventListener('click',function(){var open=t.hidden;t.hidden=!open;b.setAttribute('aria-expanded',open?'true':'false');b.textContent=open?'접기 ↑':'더보기 ↓';});
+  });
+})();
 </script>
 </body>
 </html>
