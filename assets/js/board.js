@@ -767,13 +767,34 @@ function setupYouth() {
   const form = document.getElementById('youth-form');
   const status = document.getElementById('youth-status');
   let items = [];
-  function draw() {
+  const list = document.getElementById('youth-list');
+  // 게시판 글을 파일(data/youth.json) 목록 사이에 날짜 순서대로 끼워 넣는다.
+  // 파일에 같은 날짜 설교문이 있으면 겹치지 않게 숨기고, 관리자에게만 위 칸에 보여 지울 수 있게 한다.
+  async function draw() {
+    let fileDates = [];
+    try { fileDates = await (window.Moon.youthReady || Promise.resolve([])); } catch (e) { /* 파일 목록 없이 그린다 */ }
+    const dup = new Set(fileDates);
     box.textContent = '';
+    if (list) list.querySelectorAll('.yrow.live').forEach((r) => r.remove());
     items.forEach((y) => {
       const tools = isAdmin()
         ? [deleteButton(() => deleteDoc(doc(db, 'youth', y.id)).then(() => { items = items.filter((x) => x.id !== y.id); draw(); }))]
         : [];
-      box.appendChild(youthRow({ ...y, blocks: toBlocks(y.body) }, tools));
+      if (dup.has(y.date)) {
+        if (isAdmin()) {
+          box.appendChild(el('p', { class: 'loading', text: '아래 이 설교문은 파일에 같은 날짜 글이 있어 방문자에게는 보이지 않습니다. 지워도 됩니다.' }));
+          box.appendChild(youthRow({ ...y, blocks: toBlocks(y.body) }, tools));
+        }
+        return;
+      }
+      const row = youthRow({ ...y, blocks: toBlocks(y.body) }, tools);
+      row.classList.add('live');
+      if (list && list.querySelector('.yend')) {
+        const next = [...list.querySelectorAll('.yrow')].find((r) => (r.getAttribute('data-date') || '') < (y.date || ''));
+        list.insertBefore(row, next || list.querySelector('.yend'));
+      } else {
+        box.appendChild(row);
+      }
     });
   }
   async function load() {

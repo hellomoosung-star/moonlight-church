@@ -168,21 +168,26 @@
     }
     head.addEventListener('click', toggle);
     close.addEventListener('click', toggle);
-    return el('div', { class: 'yrow' }, [head, body]);
+    return el('div', { class: 'yrow', 'data-date': y.date }, [head, body]);
   }
 
+  // youthReady: 파일에 있는 설교문 날짜 목록. 게시판(board.js)이 같은 날짜는 빼고, 날짜 순서에 끼워 넣을 때 쓴다.
   var youthBox = document.getElementById('youth-list');
+  var youthReady = Promise.resolve([]);
   if (youthBox) {
-    getJSON('data/youth.json').then(function (list) {
+    youthReady = getJSON('data/youth.json').then(function (list) {
+      list.sort(function (a, b) { return (b.date || '').localeCompare(a.date || ''); });
       youthBox.textContent = '';
       list.forEach(function (y) { youthBox.appendChild(youthRow(y)); });
       youthBox.appendChild(el('div', { class: 'yend' }));
+      return list.map(function (y) { return y.date; });
     }).catch(function () {
       youthBox.textContent = '';
       youthBox.appendChild(el('p', { class: 'loading', text: '설교문을 불러오지 못했습니다. 잠시 뒤에 다시 열어 주세요.' }));
+      return [];
     });
   }
 
   // 게시판 코드(board.js)가 같은 모양으로 그릴 수 있게 내어 준다
-  window.Moon = { el: el, fmtDate: fmtDate, youthRow: youthRow };
+  window.Moon = { el: el, fmtDate: fmtDate, youthRow: youthRow, youthReady: youthReady };
 })();
